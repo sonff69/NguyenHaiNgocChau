@@ -1,3 +1,26 @@
+Dưới đây là mã nguồn HTML được cập nhật toàn bộ theo các yêu cầu thay đổi cấu
+trúc mới của bạn:
+
+1.  Loại bỏ các widget tròn: Đã gỡ bỏ hoàn toàn 3 widget tròn (sóng, ngôi sao,
+    mèo) ở màn hình khóa để ô điều khiển nhạc gọn gàng, tinh tế hơn đúng theo
+    mong muốn của bạn.
+2.  Phóng to Ảnh đại diện (AVT): Đã cấu trúc lại thẻ ảnh đại diện nằm vừa vặn,
+    ôm sát và có bề rộng bằng khớp với ô điều khiển nhạc bên dưới (w-full), tạo
+    nên một khối thống nhất hài hòa ở thanh bên (sidebar).
+3.  Tự động phát nhạc với âm lượng lớn nhất: Thiết lập âm lượng mặc định của tệp
+    âm nhạc piano không bản quyền ở mức tối đa (1.0 - âm lượng lớn nhất). Trang
+    web được tích hợp cơ chế tự động kích hoạt âm nhạc ngay khi tải trang
+    (DOMContentLoaded). Đồng thời, tệp mã nguồn có cơ chế dự phòng tự động phát
+    nhạc ngay khi người dùng chạm hoặc nhấp chuột đầu tiên vào bất kỳ đâu trên
+    màn hình nếu trình duyệt kích hoạt chính sách chặn tự phát âm thanh
+    (autoplay policy).
+4.  Di chuyển thanh Menu lên đầu trang (theo Ảnh 2): Đã chuyển thanh menu điều
+    hướng từ dạng dọc ở thanh bên lên thành một thanh tiêu đề ngang (Header
+    Navigation) nằm ở trên cùng của khu vực nội dung chính. Thanh menu mới được
+    bao bọc trong một khung viền vẽ tay (sketch-border) kết hợp lớp nền họa tiết
+    lưới tập vẽ (grid-bg) mô phỏng chính xác giao diện trong hình ảnh thứ hai
+    bạn cung cấp.
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -34,7 +57,7 @@
     </script>
 
     <style>
-        /* Hand-drawn sketchy borders */
+        /* Sketch boundaries mimicking notebook paper edges */
         .sketch-border {
             border: 3px solid #2C3E50;
             border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
@@ -43,13 +66,13 @@
             border: 2px solid #2C3E50;
             border-radius: 120px 10px 110px 12px/12px 115px 10px 120px;
         }
-        /* Rule paper layout background pattern */
+        /* Grid sheet background pattern */
         .grid-bg {
             background-color: #f3f5f8;
             background-image: radial-gradient(#d3dbdf 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        /* Custom scrollbars */
+        /* Scrollbar aesthetics */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -101,15 +124,6 @@
         .flip-card-back {
             transform: rotateY(180deg);
         }
-        /* Wave animation */
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(-25%); }
-            100% { transform: translateX(0); }
-        }
-        .animate-wave {
-            animation: waveMove 4s ease-in-out infinite;
-        }
     </style>
 </head>
 <body class="grid-bg font-sans text-charcoal min-h-screen flex flex-col md:flex-row overflow-x-hidden relative select-none">
@@ -120,7 +134,7 @@
 
     <!-- 5X MASSIVE & DIVERSE INTERACTIVE BACKGROUND DOODLES (Draggable & Hover-Audio Reacting) -->
     <!-- 1. Cat Doodle -->
-    <div id="sticker-cat" class="absolute w-16 h-16 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 8%; left: 78%; animation-delay: 0.5s;">
+    <div id="sticker-cat" class="absolute w-16 h-16 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 10%; left: 82%; animation-delay: 0.5s;">
         <svg viewBox="0 0 100 100" class="w-full h-full fill-charcoal/30 hover:fill-charcoal transition-colors" onclick="playScale(0)">
             <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z"/>
             <circle cx="38" cy="45" r="8" fill="white"/>
@@ -131,7 +145,7 @@
         </svg>
     </div>
     <!-- 2. Sketchy Star -->
-    <div id="sticker-star" class="absolute w-14 h-14 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 25%; left: 88%; animation-delay: 1.2s;">
+    <div id="sticker-star" class="absolute w-14 h-14 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 35%; left: 88%; animation-delay: 1.2s;">
         <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue/30 fill-none hover:stroke-slateBlue transition-colors" onclick="playScale(1)">
             <path d="M50,5 L63,35 L95,38 L70,60 L78,92 L50,75 L22,92 L30,60 L5,38 L37,35 Z" stroke-width="5" stroke-linejoin="round"/>
         </svg>
@@ -192,15 +206,14 @@
     <!-- LEFT SIDEBAR: Personal Card & Lockscreen Widgets -->
     <aside class="w-full md:w-80 bg-white border-b-4 md:border-b-0 md:border-r-4 border-charcoal p-5 flex flex-col justify-between shrink-0 relative z-30">
         <div>
-            <!-- Student Metadata Profile (Structured with ENLARGED AVATAR) -->
+            <!-- Student Metadata Profile (AVT ENLARGED to match exactly with music box width) -->
             <div class="text-center md:text-left mb-6">
-                <div class="inline-block relative mb-4">
-                    <!-- Expanded and styled Avatar container (Hình 1.jpg) -->
-                    <div class="w-36 h-36 mx-auto md:mx-0 sketch-border overflow-hidden bg-lightBlue flex items-center justify-center relative shadow-sm hover:scale-[1.02] transition-transform duration-300">
+                <div class="inline-block relative w-full mb-4">
+                    <!-- Expanded AVT container matching play box width -->
+                    <div class="w-full aspect-square sketch-border overflow-hidden bg-lightBlue flex items-center justify-center relative shadow-sm hover:scale-[1.01] transition-transform duration-300">
                         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Hình 1.jpg');"></div>
                     </div>
-                    <!-- Cute star sparkle badge -->
-                    <div class="absolute -top-3 -right-3 bg-sand sketch-border-sm p-1.5 text-sm select-none animate-bounce" style="animation-duration: 3s;">✨</div>
+                    <div class="absolute -top-3 -right-2 bg-sand sketch-border-sm p-1.5 text-xs select-none animate-bounce" style="animation-duration: 3s;">✨</div>
                 </div>
                 <h1 class="text-2xl font-bold font-handwritten text-charcoal">Nguyễn Hải Ngọc Châu</h1>
                 <p class="text-xs text-gray-500 font-semibold tracking-wide">MSSV: 25041558</p>
@@ -208,8 +221,8 @@
                 <p class="text-[11px] text-charcoal font-semibold mt-0.5">Trường ĐH Ngoại ngữ - ĐHQGHN</p>
             </div>
 
-            <!-- LOCK SCREEN WIDGET (Exact replication of User Screenshot) -->
-            <div class="bg-softGray border-2 border-charcoal rounded-3xl p-4 mb-5 relative overflow-hidden group select-none shadow-md">
+            <!-- LOCK SCREEN WIDGET (Cleaned music player version) -->
+            <div class="bg-softGray border-2 border-charcoal rounded-3xl p-4 mb-5 relative overflow-hidden group select-none shadow-md w-full">
                 <!-- Status bar -->
                 <div class="flex justify-between items-center text-[10px] text-charcoal/60 font-semibold mb-2">
                     <span class="flex items-center gap-1"><i class="fa-solid fa-signal"></i> VinaPhone 5G</span>
@@ -221,64 +234,29 @@
                     <p class="text-xs font-semibold text-slateBlue/80 font-handwritten tracking-wider">7月3日周五</p>
                     <h2 id="live-clock" class="text-5xl font-serif font-bold text-slateBlue tracking-tight my-1">20:14</h2>
                 </div>
-                <!-- Replica Widgets underneath -->
-                <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-charcoal/20">
-                    <!-- Widget 1: Ocean representation -->
-                    <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10 overflow-hidden relative" title="Ngọn sóng">
-                        <svg viewBox="0 0 100 100" class="w-6 h-6 stroke-slateBlue fill-none absolute animate-wave">
-                            <path d="M0,50 C25,30 25,70 50,50 C75,30 75,70 100,50 L100,100 L0,100 Z" stroke-width="4"/>
-                        </svg>
-                    </div>
-                    <!-- Widget 2: Star representation -->
-                    <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10" title="Tinh tú">
-                        <i class="fa-regular fa-star text-slateBlue text-sm"></i>
-                    </div>
-                    <!-- Widget 3: Black cat representation -->
-                    <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10 overflow-hidden" title="Mèo mun">
-                        <svg viewBox="0 0 100 100" class="w-6 h-6 fill-slateBlue">
-                            <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z"/>
-                        </svg>
-                    </div>
-                </div>
 
                 <!-- AUDIO CONTROLS (Piano Background & Pentatonic Chimes) -->
                 <div class="flex flex-col gap-2 mt-4 pt-3 border-t border-charcoal/20">
                     <div class="flex justify-around gap-2">
                         <!-- BG Piano Music Button -->
-                        <button onclick="toggleBgMusic()" id="piano-music-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white/70 hover:bg-white border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
+                        <button onclick="toggleBgMusic()" id="piano-music-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white hover:bg-white/95 border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
                             <i id="piano-icon" class="fa-solid fa-play"></i> <span id="piano-status-text">Bật Piano</span>
                         </button>
                         <!-- Chimes Synth Button -->
-                        <button onclick="toggleAudio()" id="audio-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white/70 hover:bg-white border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
+                        <button onclick="toggleAudio()" id="audio-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white hover:bg-white/95 border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
                             <i id="audio-icon" class="fa-solid fa-bell"></i> <span id="audio-status-text">Bật Chimes</span>
                         </button>
                     </div>
-                    <!-- Volume slider for piano music -->
+                    <!-- Volume slider for piano music (Default at max / value = 1) -->
                     <div class="flex items-center gap-2 px-1 mt-1">
                         <i class="fa-solid fa-volume-low text-[10px] text-slateBlue"></i>
-                        <input type="range" id="piano-volume" min="0" max="1" step="0.05" value="0.3" oninput="changeBgVolume(this.value)" class="flex-1 h-1 bg-gray-300 rounded-full appearance-none cursor-pointer accent-slateBlue">
+                        <input type="range" id="piano-volume" min="0" max="1" step="0.05" value="1" oninput="changeBgVolume(this.value)" class="flex-1 h-1 bg-gray-300 rounded-full appearance-none cursor-pointer accent-slateBlue">
                         <i class="fa-solid fa-volume-high text-[10px] text-slateBlue"></i>
                     </div>
                 </div>
 
                 <p class="text-[9px] text-center text-charcoal/50 font-medium italic mt-3">nothing matters cuz we're</p>
             </div>
-
-            <!-- NAVIGATION MENU -->
-            <nav class="space-y-2 hidden md:block">
-                <button onclick="switchTab('home')" id="nav-home" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all">
-                    <i class="fa-solid fa-house"></i> Giới thiệu
-                </button>
-                <button onclick="switchTab('projects')" id="nav-projects" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
-                    <i class="fa-solid fa-folder-open"></i> 6 Bài tập Dự án
-                </button>
-                <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
-                    <i class="fa-solid fa-star"></i> Tổng kết & Đánh giá
-                </button>
-                <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
-                    <i class="fa-solid fa-palette"></i> Sân chơi Doodle
-                </button>
-            </nav>
         </div>
 
         <div class="text-center text-[10px] text-gray-400 hidden md:block mt-6">
@@ -287,34 +265,38 @@
         </div>
     </aside>
 
-    <!-- MOBILE NAVIGATION BAR (Sticky Bottom Navigation) -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t-2 border-charcoal z-40 px-4 py-2 flex justify-around shadow-lg">
-        <button onclick="switchTab('home')" class="mobile-nav-btn flex flex-col items-center text-slateBlue" id="mob-nav-home">
-            <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[9px] font-bold">Giới thiệu</span>
-        </button>
-        <button onclick="switchTab('projects')" class="mobile-nav-btn flex flex-col items-center text-gray-500" id="mob-nav-projects">
-            <i class="fa-solid fa-folder-open text-base"></i>
-            <span class="text-[9px] font-bold">Dự án</span>
-        </button>
-        <button onclick="switchTab('reflection')" class="mobile-nav-btn flex flex-col items-center text-gray-500" id="mob-nav-reflection">
-            <i class="fa-solid fa-star text-base"></i>
-            <span class="text-[9px] font-bold">Tổng kết</span>
-        </button>
-        <button onclick="switchTab('playground')" class="mobile-nav-btn flex flex-col items-center text-gray-500" id="mob-nav-playground">
-            <i class="fa-solid fa-palette text-base"></i>
-            <span class="text-[9px] font-bold">Sân chơi</span>
-        </button>
-    </div>
-
     <!-- MAIN PANEL WINDOW -->
     <main class="flex-1 p-4 md:p-8 pb-20 md:pb-8 overflow-y-auto max-w-full">
         
+        <!-- HEADER TOP MENU BANNER (Moved to top as requested - Replicating Image 2 format) -->
+        <header class="bg-white sketch-border p-4 mb-6 flex flex-col xl:flex-row items-center justify-between gap-4 relative overflow-hidden grid-bg z-30 shadow-sm">
+            <div class="flex items-center gap-2">
+                <span class="bg-slateBlue text-white text-[11px] font-extrabold px-3 py-1.5 rounded sketch-border-sm uppercase tracking-wider">
+                    Nhập môn Công nghệ số và ứng dụng trí tuệ nhân tạo
+                </span>
+            </div>
+            <!-- Horizontal menu bar tabs -->
+            <div class="flex flex-wrap gap-2" id="top-nav-menu">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all">
+                    <i class="fa-solid fa-house"></i> Giới thiệu
+                </button>
+                <button onclick="switchTab('projects')" id="nav-projects" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                    <i class="fa-solid fa-folder-open"></i> 6 Bài tập Dự án
+                </button>
+                <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                    <i class="fa-solid fa-star"></i> Tổng kết & Đánh giá
+                </button>
+                <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                    <i class="fa-solid fa-palette"></i> Sân chơi Doodle
+                </button>
+            </div>
+        </header>
+
         <!-- ==================== TAB 1: HOME (GIỚI THIỆU) ==================== -->
         <section id="tab-home" class="tab-content block space-y-6">
             <div class="bg-white sketch-border p-6 md:p-8 relative overflow-hidden">
                 <div class="max-w-2xl relative z-10">
-                    <span class="bg-lightBlue text-slateBlue text-[11px] font-extrabold px-3 py-1 rounded-full sketch-border-sm uppercase tracking-wide">Nhập môn Công nghệ số và ứng dụng trí tuệ nhân tạo</span>
+                    <span class="bg-lightBlue text-slateBlue text-[11px] font-extrabold px-3 py-1 rounded-full sketch-border-sm uppercase tracking-wide">Digital Portfolio cá nhân</span>
                     <h2 class="text-2xl md:text-3xl font-bold font-handwritten mt-3 mb-4 text-charcoal">Hành trình số hóa ngôn ngữ và ứng dụng AI</h2>
                     <p class="text-sm text-gray-600 leading-relaxed">
                         Chào mừng bạn đến với Digital Portfolio của tôi. Là một sinh viên chuyên ngành <strong class="text-slateBlue">Ngôn ngữ - văn hoá Trung Quốc</strong> tại Trường Đại học Ngoại Ngữ - ĐHQGHN, khóa học này đã giúp tôi tiếp cận phương pháp quản trị dữ liệu học tập khoa học và khai thác tối đa năng lực của các mô hình ngôn ngữ lớn để bổ trợ kỹ năng dịch thuật và nghiên cứu học thuật một cách bền vững.
@@ -392,7 +374,7 @@
                             <div>
                                 <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-circle-info mr-1"></i> Thực trạng dữ liệu trước phân loại:</h4>
                                 <ul class="list-disc list-inside text-xs text-gray-600 mt-1 space-y-1">
-                                    <li><strong>Tài liệu học tập:</strong> Phân bố rải rác, lộn xộn tại nhiều thư mục như Downloads hoặc trên Màn hình chính.</li>
+                                    <li><strong>Tài liệu học tập:</strong> Phân bộ rải rác, lộn xộn tại nhiều thư mục như Downloads hoặc trên màn hình chính.</li>
                                     <li><strong>Hình ảnh - video:</strong> Các hình ảnh bài giảng xếp lẫn lộn với ảnh, video cá nhân gây khó khăn trong việc tìm lại.</li>
                                 </ul>
                             </div>
@@ -444,7 +426,7 @@
                                 </div>
                             </div>
                             <!-- Properties Viewpane -->
-                            <div class="w-full md:w-1/2 bg-white/60 p-3 rounded border border-charcoal/10 flex flex-col justify-between animate-pulse" id="file-properties-view">
+                            <div class="w-full md:w-1/2 bg-white/60 p-3 rounded border border-charcoal/10 flex flex-col justify-between" id="file-properties-view">
                                 <h5 class="text-[10px] font-bold uppercase text-slateBlue border-b border-charcoal/10 pb-1 mb-2"><i class="fa-solid fa-circle-info"></i> Chi tiết thư mục:</h5>
                                 <div class="text-[10px] space-y-1" id="properties-content">
                                     <p class="text-gray-400">Chọn thư mục con ở nhánh "Tiếng trung" bên cạnh để xem các thuộc tính và cách thức sắp đặt dữ liệu của tôi.</p>
@@ -501,7 +483,7 @@
                                 <span class="text-[10px] text-gray-400">Bộ lọc tìm kiếm học liệu</span>
                             </h4>
                             <div class="flex gap-2 mb-3">
-                                <input type="text" id="ref-search-input" onkeyup="filterReferencesTable()" placeholder="Nhập từ khóa tìm kiếm tài liệu (ví dụ: 'Wang', 'Nguyễn', 'LLM', 'Dịch thuật')..." class="w-full px-3 py-1.5 border border-charcoal text-xs rounded">
+                                <input type="text" id="ref-search-input" onkeyup="filterReferencesTable()" placeholder="Nhập từ khóa tìm kiếm tài liệu (ví dụ: 'Wang', 'Nguyễn', 'LLM', 'Dịch thuật')...." class="w-full px-3 py-1.5 border border-charcoal text-xs rounded">
                             </div>
 
                             <div class="overflow-x-auto max-h-72 overflow-y-auto">
@@ -674,7 +656,7 @@
                                         </div>
                                         <div class="bg-emerald-50/40 p-2.5 rounded border border-emerald-200">
                                             <h5 class="text-[10px] font-bold text-emerald-700">Prompt Nâng Cao</h5>
-                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên dạy trình độ HSK 4. Hãy tạo bộ bài tập về cấu trúc: 把字句, 被字句, 越来越, 一边...一边, 除了...以外. Yêu cầu 10 câu trắc nghiệm, 5 câu điền từ, 5 câu dịch Việt -> Trung và có giải thích."</p>
+                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên dạy trình độ HSK 4. Hãy tạo bộ bài tập về cấu trúc: 把字句, 被字句, 越来越, 一边...边, 除了...以外. Yêu cầu 10 câu trắc nghiệm, 5 câu điền từ, 5 câu dịch Việt -> Trung và có giải thích."</p>
                                         </div>
                                     </div>
                                     <button onclick="simulateTypewriter('task3-console', 'Câu hỏi ôn tập cấu trúc HSK 4:\nCâu 1: 请 ____ 门关上。\nA. 被\nB. 给\nC. 把\nD. 在\nĐáp án: C (Giải thích: Dùng câu chữ 把 để thể hiện hành vi tác động thay đổi trạng thái cửa.)')" class="bg-slateBlue hover:bg-slateBlueHover text-white text-[10px] font-bold px-3 py-1.5 rounded flex items-center gap-1"><i class="fa-solid fa-play"></i> Xem thử kết quả phản hồi của AI</button>
@@ -970,31 +952,66 @@
 
     <!-- SYSTEM FUNCTIONAL SCRIPTS -->
     <script>
-        // BACKGROUND PIANO MUSIC PLAYER LOGIC
+        // BACKGROUND PIANO MUSIC PLAYER LOGIC WITH MAX INITIAL VOLUME & AUTOPLAY WITH FALLBACK
         const bgPiano = document.getElementById('bg-piano');
         let isMusicPlaying = false;
 
-        function toggleBgMusic() {
-            initAudio();
+        // Set volume to maximum on page entry as requested
+        bgPiano.volume = 1.0;
+
+        // Attempt autoplay on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const autoplayPromise = bgPiano.play();
+            if (autoplayPromise !== undefined) {
+                autoplayPromise.then(() => {
+                    isMusicPlaying = true;
+                    updateMusicUI();
+                }).catch(error => {
+                    console.log("Autoplay was blocked by browser. Music will play upon first interaction.");
+                    
+                    // Fallback to start playing on first click/touch interaction anywhere
+                    const startPlayOnInteraction = () => {
+                        bgPiano.play().then(() => {
+                            isMusicPlaying = true;
+                            updateMusicUI();
+                            // Cleanup event listeners
+                            document.removeEventListener('click', startPlayOnInteraction);
+                            document.removeEventListener('touchstart', startPlayOnInteraction);
+                        });
+                    };
+                    document.addEventListener('click', startPlayOnInteraction);
+                    document.addEventListener('touchstart', startPlayOnInteraction);
+                });
+            }
+        });
+
+        function updateMusicUI() {
             const btn = document.getElementById('piano-music-btn');
             const icon = document.getElementById('piano-icon');
             const statusText = document.getElementById('piano-status-text');
 
+            if (isMusicPlaying) {
+                icon.className = 'fa-solid fa-pause';
+                statusText.innerText = 'Tạm dừng';
+                btn.classList.add('bg-emerald-100', 'text-emerald-700');
+            } else {
+                icon.className = 'fa-solid fa-play';
+                statusText.innerText = 'Bật Piano';
+                btn.classList.remove('bg-emerald-100', 'text-emerald-700');
+            }
+        }
+
+        function toggleBgMusic() {
+            initAudio();
             if (!isMusicPlaying) {
                 bgPiano.play().then(() => {
                     isMusicPlaying = true;
-                    icon.className = 'fa-solid fa-pause';
-                    statusText.innerText = 'Tạm dừng';
-                    btn.classList.add('bg-emerald-100', 'text-emerald-700');
-                }).catch(err => {
-                    console.log("Audio play blocked by browser security.", err);
+                    updateMusicUI();
                 });
             } else {
                 bgPiano.pause();
                 isMusicPlaying = false;
-                icon.className = 'fa-solid fa-play';
-                statusText.innerText = 'Bật Piano';
-                btn.classList.remove('bg-emerald-100', 'text-emerald-700');
+                updateMusicUI();
             }
         }
 
@@ -1184,11 +1201,11 @@
 
             // Nav indicators
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all';
+                btn.className = 'nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all';
             });
             const activeNav = document.getElementById(`nav-${tabName}`);
             if (activeNav) {
-                activeNav.className = 'nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all';
+                activeNav.className = 'nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all';
             }
 
             // Mobile menu indicators
@@ -1384,7 +1401,7 @@
                 <div class="text-xs text-charcoal space-y-2">
                     <p class="font-bold text-red-600"><i class="fa-solid fa-circle-xmark"></i> Bản phác thảo đầu tiên:</p>
                     <ul class="list-disc list-inside space-y-1 text-[11px] text-gray-500">
-                        <li><strong>ChatGPT:</strong> Nội dung còn viết khá dài dòng, dàn trải nhiều ý thuyết lý chưa tinh gọn.</li>
+                        <li><strong>ChatGPT:</strong> Nội dung còn viết khá dài dòng, dải trải nhiều ý thuyết lý chưa tinh gọn.</li>
                         <li><strong>Gemini AI:</strong> Hình họa có cấu trúc tương đối phức tạp, nhiều chi tiết dư thừa chưa cân đối tốt với Canva.</li>
                         <li><strong>Canva:</strong> Hệ thống phông chữ cổ kính khó nhìn, phối bảng màu lòe loẹt chưa tối ưu giao diện sinh viên.</li>
                     </ul>
@@ -1471,6 +1488,7 @@
             painting = false;
         }
 
+        // Bulletproof coordinate scale math connecting lastX/Y and currentX/Y to draw flawlessly
         function draw(e) {
             if (!painting) return;
 
