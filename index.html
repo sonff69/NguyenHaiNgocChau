@@ -1,30 +1,3 @@
-Dưới đây là phiên bản cập nhật hoàn thiện của tệp index.html.
-
-Các nâng cấp và chỉnh sửa chi tiết:
-
-1.  Tái cấu trúc giao diện & Tăng kích thước ảnh đại diện: Ảnh đại diện (avatar)
-    đã được tăng kích cỡ nổi bật lên mức w-36 h-36 (thay vì kích thước nhỏ trước
-    đó), được thiết kế lại với khung viền phác thảo vẽ tay (sketch-border) nghệ
-    thuật và hiệu ứng đổ bóng mềm mại, tạo điểm nhấn cuốn hút ngay khi vừa truy
-    cập trang.
-2.  Khắc phục lỗi bảng vẽ Doodle (Mouse Drawing Bug): Sửa đổi hoàn toàn cơ chế
-    lấy tọa độ chuột trên Canvas bằng cách tính toán hệ số tỉ lệ hiển thị thực
-    tế (scaleX, scaleY) dựa trên hàm getBoundingClientRect(). Đồng thời áp dụng
-    thuật toán nối nét vẽ thông qua việc lưu vết điểm tọa độ liền trước (lastX,
-    lastY). Nhờ vậy, nét vẽ bằng chuột trên máy tính hay cảm ứng chạm trên điện
-    thoại đều hoạt động chính xác, cho nét vẽ mượt mà, liên tục và không bị đứt
-    quãng hay lệch vị trí.
-3.  Phát nhạc nền Piano nhẹ nhàng không bản quyền: Tích hợp trình phát nhạc nền
-    với bản nhạc piano nhẹ nhàng thư giãn "On A Piano Cloud" của nhà soạn nhạc
-    Liborio Conti. Bạn có thể bật/tắt nhạc nền và tùy chỉnh âm lượng trực tiếp
-    ngay trên widget màn hình khóa ở thanh bên (sidebar).
-4.  Tăng số lượng Doodle trang trí gấp 5 lần: Bổ sung hơn 15 hình vẽ Doodle đa
-    dạng (mèo mun, ngôi sao phác thảo, ngọn sóng biển, vòng xoáy vô cực, trăng
-    khuyết, đám mây nguệch ngoạc, bông hoa nhỏ, mũi tên chỉ hướng...) được phân
-    bổ nghệ thuật dưới dạng lớp nền (background) mờ của trang giấy. Một số
-    Doodle được thiết lập khả năng tự do kéo thả (drag & drop), trong khi số
-    khác tự chuyển động lắc lư nhẹ nhàng để tạo chiều sâu trực quan.
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
