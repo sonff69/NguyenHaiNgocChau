@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nguyễn Hải Ngọc Châu</title>
+    <title>Digital Portfolio | Nguyễn Hải Ngọc Châu</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Playpen Sans (Handwritten), Quicksand (Geometric Sans), Playfair Display (Serif) -->
@@ -101,93 +101,29 @@
         .flip-card-back {
             transform: rotateY(180deg);
         }
-        /* Wave animation */
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            50% { transform: translateX(-25%); }
-            100% { transform: translateX(0); }
+        /* Dynamic Generated Doodles styling */
+        .dynamic-doodle {
+            position: absolute;
+            pointer-events: auto;
+            cursor: grab;
+            transition: transform 0.2s;
         }
-        .animate-wave {
-            animation: waveMove 4s ease-in-out infinite;
+        .dynamic-doodle:active {
+            cursor: grabbing;
+        }
+        .dynamic-doodle:hover {
+            transform: scale(1.15) rotate(5deg);
         }
     </style>
 </head>
 <body class="grid-bg font-sans text-charcoal min-h-screen flex flex-col md:flex-row overflow-x-hidden relative select-none">
 
-    <!-- BACKGROUND AUDIO ASSETS -->
+    <!-- BACKGROUND AUDIO ASSETS (Piano music & Procedural key sounds) -->
     <!-- Soft royalty-free piano music by Liborio Conti -->
     <audio id="bg-piano" loop preload="auto" src="https://www.no-copyright-music.com/wp-content/uploads/2021/09/OnAPianoCloud.mp3"></audio>
 
-    <!-- 25X SẮC NÉT & ĐA DẠNG INTERACTIVE BACKGROUND DOODLES (Draggable & Hover-Audio Reacting) -->
-    <!-- 1. Cat Doodle -->
-    <div id="sticker-cat" class="absolute w-16 h-16 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 10%; left: 82%; animation-delay: 0.5s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full fill-charcoal" onclick="playScale(0)">
-            <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z"/>
-            <circle cx="38" cy="45" r="8" fill="white"/>
-            <circle cx="38" cy="45" r="4" fill="black"/>
-            <circle cx="62" cy="45" r="8" fill="white"/>
-            <circle cx="62" cy="45" r="4" fill="black"/>
-            <path d="M45,58 Q50,62 55,58" stroke="white" stroke-width="3" fill="none"/>
-        </svg>
-    </div>
-    <!-- 2. Sketchy Star -->
-    <div id="sticker-star" class="absolute w-14 h-14 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 35%; left: 88%; animation-delay: 1.2s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none" onclick="playScale(1)">
-            <path d="M50,5 L63,35 L95,38 L70,60 L78,92 L50,75 L22,92 L30,60 L5,38 L37,35 Z" stroke-width="5" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <!-- 3. Spiral Doodle -->
-    <div id="sticker-spiral" class="absolute w-12 h-12 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 55%; left: 82%; animation-delay: 2s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none" onclick="playScale(2)">
-            <path d="M50,50 Q45,45 45,40 Q45,30 55,30 Q70,30 70,45 Q70,65 45,65 Q15,65 15,40 Q15,10 50,10 Q90,10 90,50 Q90,90 40,90" stroke-width="6" stroke-linecap="round"/>
-        </svg>
-    </div>
-    <!-- 4. Double Exclamation Doodle -->
-    <div id="sticker-excl" class="absolute w-10 h-10 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 72%; left: 87%; animation-delay: 2.8s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none" onclick="playScale(3)">
-            <path d="M35,15 L35,65 M35,80 L35,85 M65,15 L65,65 M65,80 L65,85" stroke-width="8" stroke-linecap="round"/>
-        </svg>
-    </div>
-    <!-- 5. Heart Scribble -->
-    <div id="sticker-heart" class="absolute w-12 h-12 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 85%; left: 75%; animation-delay: 3.4s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-rose-600 fill-none" onclick="playScale(4)">
-            <path d="M50,30 C35,10 10,25 10,50 C10,75 50,90 50,90 C50,90 90,75 90,50 C90,25 65,10 50,30 Z" stroke-width="5" stroke-linejoin="round"/>
-        </svg>
-    </div>
-    <!-- 6. Cute Cloud Doodle -->
-    <div class="absolute w-16 h-12 z-10 opacity-70 pointer-events-none float-doodle" style="top: 4%; left: 25%; animation-delay: 4.1s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
-            <path d="M20,60 C15,60 10,55 10,50 C10,42 20,38 25,40 C30,30 45,25 55,30 C65,25 75,35 75,45 C85,45 90,52 90,60 C90,68 80,72 75,70 L20,70" stroke-width="4"/>
-        </svg>
-    </div>
-    <!-- 7. Small Sparkle Clusters -->
-    <div class="absolute w-8 h-8 z-10 opacity-70 pointer-events-none float-doodle" style="top: 15%; left: 45%; animation-delay: 1.8s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none">
-            <path d="M50,10 L50,90 M10,50 L90,50" stroke-width="8" stroke-linecap="round"/>
-        </svg>
-    </div>
-    <!-- 8. Mini Flowers -->
-    <div class="absolute w-10 h-10 z-10 opacity-60 pointer-events-none float-doodle" style="top: 68%; left: 18%; animation-delay: 2.5s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
-            <circle cx="50" cy="50" r="15" stroke-width="4"/>
-            <circle cx="50" cy="25" r="12" stroke-width="4"/>
-            <circle cx="50" cy="75" r="12" stroke-width="4"/>
-            <circle cx="25" cy="50" r="12" stroke-width="4"/>
-            <circle cx="75" cy="50" r="12" stroke-width="4"/>
-        </svg>
-    </div>
-    <!-- 9. Swirl Loop -->
-    <div class="absolute w-12 h-12 z-10 opacity-70 pointer-events-none float-doodle" style="top: 48%; left: 3%; animation-delay: 5s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none">
-            <path d="M10,50 Q30,20 50,50 Q70,80 90,50" stroke-width="5" stroke-linecap="round"/>
-        </svg>
-    </div>
-    <!-- 10. Crescent Moon -->
-    <div class="absolute w-12 h-12 z-10 opacity-70 pointer-events-none float-doodle" style="top: 85%; left: 32%; animation-delay: 3s;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
-            <path d="M70,15 C40,15 25,40 25,60 C25,80 45,90 70,85 C55,80 45,65 45,50 C45,35 55,20 70,15 Z" stroke-width="4"/>
-        </svg>
-    </div>
+    <!-- DYNAMIC DOODLE CONTAINER (Will be populated with 55+ interactive doodles via JS) -->
+    <div id="doodle-container" class="absolute inset-0 z-10 pointer-events-none overflow-hidden"></div>
 
     <!-- LEFT SIDEBAR: Personal Card & Lockscreen Widgets -->
     <aside class="w-full md:w-80 bg-white border-b-4 md:border-b-0 md:border-r-4 border-charcoal p-5 flex flex-col justify-between shrink-0 relative z-30">
@@ -252,9 +188,9 @@
     </aside>
 
     <!-- MAIN PANEL WINDOW -->
-    <main class="flex-1 p-4 md:p-8 pb-20 md:pb-8 overflow-y-auto max-w-full">
+    <main class="flex-1 p-4 md:p-8 pb-20 md:pb-8 overflow-y-auto max-w-full relative z-20">
         
-        <!-- HEADER TOP MENU BANNER (Moved to top as requested - Replicating Image 2 format) -->
+        <!-- HEADER TOP MENU BANNER -->
         <header class="bg-white sketch-border p-4 mb-6 flex flex-col xl:flex-row items-center justify-between gap-4 relative overflow-hidden grid-bg z-30 shadow-sm">
             <div class="flex items-center gap-2">
                 <span class="bg-slateBlue text-white text-[11px] font-extrabold px-3 py-1.5 rounded sketch-border-sm uppercase tracking-wider">
@@ -349,102 +285,66 @@
             </div>
 
             <!-- DETAIL PAGES FOR EACH PROJECT -->
-            <!-- PROJECT 1: Folder Management (Based on PDF 1 & PDF 2) -->
+            <!-- PROJECT 1: Folder Management (BASED EXCLUSIVELY ON 12-STEP PROCESS FROM PDF 1) -->
             <div id="project-detail-1" class="inner-project-content block space-y-6">
-                <!-- Internal tab bar for Bài 1 -->
-                <div class="flex gap-2 border-b border-gray-200 pb-2">
-                    <button onclick="toggleSubProjectOne('1a')" id="btn-sub1a" class="sub-proj-btn px-3 py-1 text-xs font-bold bg-slateBlue text-white rounded border border-charcoal">Bài 1A: Phân loại Học liệu</button>
-                    <button onclick="toggleSubProjectOne('1b')" id="btn-sub1b" class="sub-proj-btn px-3 py-1 text-xs font-bold hover:bg-gray-100 text-charcoal rounded border border-charcoal">Bài 1B: Thao tác tệp MacOS</button>
-                </div>
-
-                <!-- SUB 1A: File Classification -->
-                <div id="sub1a-content" class="block bg-white sketch-border p-6 space-y-4">
-                    <div class="bg-sand p-4 sketch-border-sm text-xs">
-                        <h4 class="font-bold text-slateBlue mb-1 uppercase text-[10px]"><i class="fa-solid fa-triangle-exclamation"></i> Tình trạng dữ liệu cá nhân ban đầu:</h4>
-                        <p class="text-gray-600 leading-relaxed">
-                            - <strong>Tài liệu học tập:</strong> Phân bố rải rác, lộn xộn tại nhiều thư mục khác nhau như Downloads hoặc để ngay ở màn hình nền Taskbar.<br>
-                            - <strong>Hình ảnh - video:</strong> Các hình ảnh bài giảng xếp lẫn lộn với ảnh, video cá nhân gây khó khăn lớn trong việc tìm kiếm lại khi cần ôn tập.
-                        </p>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-3">
-                            <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-arrows-spin mr-1"></i> Giải pháp sao lưu an toàn:</h4>
-                            <ul class="text-xs text-gray-600 space-y-2 pl-2 list-disc list-inside">
-                                <li><strong>Dịch vụ đám mây (Cloud Storage):</strong> Sử dụng Google Drive (hoặc OneDrive). Thiết lập tính năng tự động đồng bộ hóa (Auto-Sync) các thư mục trong thư mục Tiếng Trung. Mỗi khi có chỉnh sửa trên máy tính, dữ liệu sẽ ngay lập tức được tải lên đám mây.</li>
-                                <li><strong>Ổ cứng ngoài (External Hard Drive):</strong> Sử dụng ổ cứng di động 500GB. Thực hiện sao lưu thủ công toàn bộ thư mục Tiếng Trung định kỳ để đề phòng trường hợp mất tài khoản đám mây hoặc không có mạng internet.</li>
-                            </ul>
-                        </div>
-
-                        <!-- Cấu trúc thư mục mới -->
-                        <div class="bg-slate-50 p-4 rounded-xl border border-charcoal/20">
-                            <h4 class="font-bold text-slateBlue text-xs uppercase mb-2"><i class="fa-solid fa-circle-check"></i> Cấu trúc thư mục mới tối ưu:</h4>
-                            <div class="text-[11px] text-gray-600 font-mono pl-3 border-l-2 border-slateBlue">
-                                📂 <strong>Tài liệu</strong> (Thư mục gốc)<br>
-                                &nbsp;&nbsp;📂 中文<br>
-                                &nbsp;&nbsp;📂 Tanh<br>
-                                &nbsp;&nbsp;📂 csvhvn<br>
-                                &nbsp;&nbsp;📂 michos<br>
-                                &nbsp;&nbsp;📂 高中学毕业<br>
-                                &nbsp;&nbsp;📂 <strong>Tiếng trung</strong> (Thư mục con phân loại riêng)<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;📂 1. Tài liệu học trên lớp (Slide, bài tập nhóm)<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;📂 2. Tài liệu học thi CC (Luyện thi HSK, HSKK)<br>
-                                &nbsp;&nbsp;&nbsp;&nbsp;📂 3. Ngoại khoá (Tài liệu sự kiện, hoạt động câu lạc bộ)
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-charcoal/10 text-xs">
-                        <div class="bg-emerald-50/30 p-3 rounded border border-emerald-100">
-                            <h5 class="font-bold text-emerald-800"><i class="fa-solid fa-square-plus"></i> Các lợi ích thiết thực:</h5>
-                            <ul class="list-disc list-inside mt-1.5 space-y-1 text-gray-600">
-                                <li><strong>Tiết kiệm thời gian:</strong> Việc tìm kiếm bài tập dịch giảm từ 5 - 10 phút xuống chỉ còn vài giây nhờ công cụ tìm kiếm của máy tính.</li>
-                                <li><strong>Giải phóng không gian lưu trữ:</strong> Dọn dẹp triệt để các dữ liệu rác cũ, giúp máy tính chạy mượt mà, tối ưu hiệu năng hơn.</li>
-                                <li><strong>An toàn bảo mật:</strong> Không còn lo lắng bị mất bài luận, tiểu luận cuối kỳ nhờ hệ thống sao lưu đám mây tự động.</li>
-                            </ul>
-                        </div>
-                        <div class="bg-amber-50/30 p-3 rounded border border-amber-100">
-                            <h5 class="font-bold text-amber-800"><i class="fa-solid fa-triangle-exclamation"></i> Thách thức đối mặt:</h5>
-                            <ul class="list-disc list-inside mt-1.5 space-y-1 text-gray-600">
-                                <li>Mất khá nhiều thời gian ban đầu để phân loại và đổi tên cho lượng lớn file tích tụ từ các bài giảng cũ trước đó.</li>
-                                <li>Khó khăn trong việc ghi nhớ và thực hiện đặt tên đúng theo quy ước nhất quán trong những ngày đầu tiên.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SUB 1B: MacOS steps walk-through -->
-                <div id="sub1b-content" class="hidden bg-white sketch-border p-6 space-y-4">
-                    <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-brands fa-apple"></i> Các bước rèn luyện kỹ năng tệp tin trên hệ điều hành MacOS:</h4>
+                <div class="bg-white sketch-border p-6">
+                    <span class="text-xs font-bold text-slateBlue uppercase">Bài tập 1 (Mục 1.4)</span>
+                    <h3 class="text-lg font-bold font-handwritten text-charcoal mt-1">Hệ thống hóa thao tác quản lý tệp tin và thư mục trên MacOS</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-                        <!-- Left Checklist steps -->
-                        <div class="md:col-span-5 space-y-1.5 max-h-80 overflow-y-auto pr-2">
-                            <button onclick="goToMacStep(0)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-bold border border-charcoal/10 bg-slateBlue text-white" id="lbl-step-0">Bước 1: Mở Finder</button>
-                            <button onclick="goToMacStep(1)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-1">Bước 2: Chọn mục Tài liệu</button>
-                            <button onclick="goToMacStep(2)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-2">Bước 3: Tạo thư mục ThucHanh</button>
-                            <button onclick="goToMacStep(3)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-3">Bước 4: Nhấn vào thư mục vừa tạo</button>
-                            <button onclick="goToMacStep(4)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-4">Bước 5: Tạo tệp tin Ghichu.txt</button>
-                            <button onclick="goToMacStep(5)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-5">Bước 6: Đổi tên tệp văn bản</button>
-                            <button onclick="goToMacStep(6)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-6">Bước 7: Tạo thư mục con Tailieu</button>
-                            <button onclick="goToMacStep(7)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-7">Bước 8: Sao chép tệp tin</button>
-                            <button onclick="goToMacStep(8)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-8">Bước 9: Di chuyển tệp tin</button>
-                            <button onclick="goToMacStep(9)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-9">Bước 10: Xóa tệp tin vào Thùng rác</button>
-                            <button onclick="goToMacStep(10)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-10">Bước 11: Xóa vĩnh viễn tệp tin</button>
-                            <button onclick="goToMacStep(11)" class="step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal" id="lbl-step-11">Bước 12: Khôi phục tệp đã xóa</button>
+                    <div class="space-y-4 mt-4">
+                        <div class="bg-sand p-4 sketch-border-sm text-xs">
+                            <h4 class="font-bold text-slateBlue mb-1 uppercase text-[10px]"><i class="fa-solid fa-bullseye"></i> Mục tiêu thực hành:</h4>
+                            <p class="text-gray-600 leading-relaxed">
+                                Rèn luyện kỹ năng tạo, đổi tên, sao chép, di chuyển, xóa tệp tin và thư mục một cách thành thạo trên hệ điều hành MacOS thông qua chu trình 12 bước khoa học.
+                            </p>
                         </div>
 
-                        <!-- Right Detail display -->
-                        <div class="md:col-span-7 bg-sand p-4 rounded-xl border-2 border-charcoal flex flex-col justify-between min-h-[220px]">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-charcoal/10 pb-1.5 mb-2.5">
-                                    <h5 class="font-bold text-xs text-charcoal" id="mac-step-title">Bước 1: Mở Finder</h5>
-                                    <span class="text-[9px] bg-slateBlue text-white px-2 py-0.5 rounded-full font-bold">Thực hành MacOS</span>
+                        <!-- 12-Step Interative Walkthrough Stepper -->
+                        <div class="bg-white border-2 border-charcoal rounded-xl p-4 shadow-sm">
+                            <div class="flex items-center justify-between border-b border-charcoal/10 pb-2 mb-3">
+                                <h4 class="font-bold font-handwritten text-xs text-charcoal flex items-center gap-2">
+                                    <i class="fa-brands fa-apple text-slateBlue"></i> Quy trình 12 bước thực hành MacOS Finder
+                                </h4>
+                                <div class="flex gap-1">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
                                 </div>
-                                <p class="text-xs text-gray-600 leading-relaxed" id="mac-step-desc">Khởi chạy Finder từ thanh Dock của hệ điều hành MacOS để bắt đầu quản trị các tệp tin lưu trữ đại học.</p>
                             </div>
-                            <div class="border-t border-charcoal/10 pt-2 font-mono text-[9px] text-slateBlue" id="mac-step-path">
-                                Cấp thư mục: Thanh Dock hệ thống MacOS
+
+                            <!-- Stepper Container -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <!-- Steps list -->
+                                <div class="md:col-span-1 h-64 overflow-y-auto border border-charcoal/10 rounded-lg p-2 bg-slate-50 space-y-1">
+                                    <div id="step-btn-0" onclick="setStep(0)" class="cursor-pointer p-1.5 rounded text-[10px] font-bold bg-slateBlue text-white border border-charcoal/10">B1: Mở Finder</div>
+                                    <div id="step-btn-1" onclick="setStep(1)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B2: Chọn mục Tài liệu</div>
+                                    <div id="step-btn-2" onclick="setStep(2)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B3: Tạo thư mục</div>
+                                    <div id="step-btn-3" onclick="setStep(3)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B4: Vào thư mục vừa tạo</div>
+                                    <div id="step-btn-4" onclick="setStep(4)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B5: Tạo tệp Ghichu.txt</div>
+                                    <div id="step-btn-5" onclick="setStep(5)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B6: Đổi tên tệp văn bản</div>
+                                    <div id="step-btn-6" onclick="setStep(6)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B7: Tạo thư mục con</div>
+                                    <div id="step-btn-7" onclick="setStep(7)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B8: Sao chép tệp tin</div>
+                                    <div id="step-btn-8" onclick="setStep(8)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B9: Di chuyển tệp tin</div>
+                                    <div id="step-btn-9" onclick="setStep(9)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B10: Xóa tệp tin</div>
+                                    <div id="step-btn-10" onclick="setStep(10)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B11: Xóa vĩnh viễn</div>
+                                    <div id="step-btn-11" onclick="setStep(11)" class="cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10">B12: Khôi phục Thùng rác</div>
+                                </div>
+
+                                <!-- Detail explanation simulator space -->
+                                <div class="md:col-span-2 bg-sand/30 p-4 rounded-lg border border-charcoal/10 flex flex-col justify-between h-64">
+                                    <div>
+                                        <div class="flex items-center justify-between mb-2">
+                                            <span class="bg-lightBlue text-slateBlue font-bold text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full" id="inner-step-idx">Bước 1 / 12</span>
+                                            <span class="text-[10px] text-gray-400 font-semibold" id="inner-step-shortcut">Lệnh: Click Chuột</span>
+                                        </div>
+                                        <h4 class="font-bold text-sm text-charcoal font-handwritten" id="inner-step-title">Mở Finder</h4>
+                                        <p class="text-xs text-gray-600 mt-2 leading-relaxed" id="inner-step-desc">Khởi chạy Finder từ thanh Dock trên hệ điều hành MacOS.</p>
+                                    </div>
+                                    <div class="bg-white p-2.5 rounded border border-charcoal/5 font-mono text-[10px] text-slateBlue flex items-center justify-between">
+                                        <span>Cấu trúc thư mục: <strong class="text-charcoal" id="inner-step-path">Vị trí: Dock</strong></span>
+                                        <i class="fa-solid fa-display"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -623,7 +523,7 @@
                                         </div>
                                         <div class="bg-emerald-50/40 p-2.5 rounded border border-emerald-200">
                                             <h5 class="text-[10px] font-bold text-emerald-700">Prompt Nâng Cao</h5>
-                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên môn Nhập môn Công nghệ số và Trí tuệ nhân tạo. Hãy giải thích Machine Learning theo cấu trúc: Định nghĩa, Nguyên lý, Ví dụ, So sánh, Hiểu lầm phổ biến, 5 câu hỏi kiểm tra."</p>
+                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên môn Nhập môn Công nghệ số và Trí tuệ nhân tạo. Hãy giải thích Machine Learning theo cấu trúc: Định nghĩa, Nguyên lý hoạt động, Ví dụ thực tế, So sánh với lập trình truyền thống, Những hiểu lầm phổ biến, 5 câu hỏi kiểm tra."</p>
                                         </div>
                                     </div>
                                     <button onclick="simulateTypewriter('task2-console', 'Machine Learning là một nhánh của Trí tuệ nhân tạo tập trung vào việc tự học từ dữ liệu mà không cần lập trình thủ công chi tiết.\nVí dụ thực tế: Dạy máy lọc thư rác (Spam) thông qua dữ liệu huấn luyện hàng nghìn thư mẫu có gán nhãn.')" class="bg-slateBlue hover:bg-slateBlueHover text-white text-[10px] font-bold px-3 py-1.5 rounded flex items-center gap-1"><i class="fa-solid fa-play"></i> Xem thử kết quả phản hồi của AI</button>
@@ -646,7 +546,7 @@
                                         </div>
                                         <div class="bg-emerald-50/40 p-2.5 rounded border border-emerald-200">
                                             <h5 class="text-[10px] font-bold text-emerald-700">Prompt Nâng Cao</h5>
-                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên dạy trình độ HSK 4. Hãy tạo bộ bài tập về cấu trúc: 把字句, 被字句, 越来越, 一边...一边, 除了...以外. Yêu cầu 10 câu trắc nghiệm, 5 câu điền từ, 5 câu dịch Việt -> Trung và có giải thích."</p>
+                                            <p class="text-[10px] text-gray-500 italic mt-1">"Bạn là giảng viên dạy trình độ HSK 4. Hãy tạo bộ bài tập về cấu trúc: 把字句, 被字句, 越来越, 一边...边, 除了...以外. Yêu cầu 10 câu trắc nghiệm, 5 câu điền từ, 5 câu dịch Việt -> Trung và có giải thích."</p>
                                         </div>
                                     </div>
                                     <button onclick="simulateTypewriter('task3-console', 'Câu hỏi ôn tập cấu trúc HSK 4:\nCâu 1: 请 ____ 门关上。\nA. 被\nB. 给\nC. 把\nD. 在\nĐáp án: C (Giải thích: Dùng câu chữ 把 để thể hiện hành vi tác động thay đổi trạng thái cửa.)')" class="bg-slateBlue hover:bg-slateBlueHover text-white text-[10px] font-bold px-3 py-1.5 rounded flex items-center gap-1"><i class="fa-solid fa-play"></i> Xem thử kết quả phản hồi của AI</button>
@@ -894,12 +794,10 @@
                 <p class="text-xs text-gray-500 mb-4">Bạn có thể tự do phác thảo các ý tưởng của mình trực tiếp lên khung bảng dưới đây, đồng thời bật nhạc chuông thư giãn chuông gió ở mục khóa màn hình bên trái để tăng tính tập trung.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <!-- Advanced Drawing Board (Canvas z-index increased & background grid handled directly) -->
-                    <div class="md:col-span-3 bg-white border-2 border-charcoal rounded-2xl shadow-inner relative h-[320px] overflow-hidden" id="canvas-container">
-                        <!-- Direct Background grid without overlays blocking cursor -->
-                        <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image: linear-gradient(#e2e8f0 1px, transparent 1px); background-size: 100% 24px;"></div>
-                        <!-- Canvas brought to the highest interactive layer -->
-                        <canvas id="doodleCanvas" class="relative z-30 w-full h-full block" style="touch-action: none;"></canvas>
+                    <!-- Advanced Drawing Board -->
+                    <div class="md:col-span-3 bg-white border-2 border-charcoal rounded-2xl shadow-inner overflow-hidden relative" id="canvas-container">
+                        <div class="absolute inset-0 bg-white pointer-events-none opacity-20" style="background-image: linear-gradient(#e2e8f0 1px, transparent 1px); background-size: 100% 24px;"></div>
+                        <canvas id="doodleCanvas" class="w-full relative z-10"></canvas>
                     </div>
 
                     <!-- Side Controllers -->
@@ -953,6 +851,8 @@
 
         // Attempt autoplay on load
         document.addEventListener('DOMContentLoaded', () => {
+            spawnMassiveDoodles(); // Run 10x dynamic doodle generation
+
             const autoplayPromise = bgPiano.play();
             if (autoplayPromise !== undefined) {
                 autoplayPromise.then(() => {
@@ -995,20 +895,91 @@
 
         function toggleBgMusic() {
             initAudio();
+            const btn = document.getElementById('piano-music-btn');
+            const icon = document.getElementById('piano-icon');
+            const statusText = document.getElementById('piano-status-text');
+
             if (!isMusicPlaying) {
                 bgPiano.play().then(() => {
                     isMusicPlaying = true;
-                    updateMusicUI();
+                    icon.className = 'fa-solid fa-pause';
+                    statusText.innerText = 'Tạm dừng';
+                    btn.classList.add('bg-emerald-100', 'text-emerald-700');
+                }).catch(err => {
+                    console.log("Audio play blocked.", err);
                 });
             } else {
                 bgPiano.pause();
                 isMusicPlaying = false;
-                updateMusicUI();
+                icon.className = 'fa-solid fa-play';
+                statusText.innerText = 'Bật Piano';
+                btn.classList.remove('bg-emerald-100', 'text-emerald-700');
             }
         }
 
         function changeBgVolume(val) {
             bgPiano.volume = val;
+        }
+
+        // DYNAMIC DOODLE GENERATOR (Spawns 55+ visible hand-drawn notebook chimes doodles)
+        function spawnMassiveDoodles() {
+            const container = document.getElementById('doodle-container');
+            const doodlePaths = [
+                // 1. Star
+                '<path d="M50,10 L61,38 L90,40 L68,60 L75,88 L50,72 L25,88 L32,60 L10,40 L39,38 Z" stroke="#517594" stroke-width="4" fill="none" />',
+                // 2. Swirl Spiral
+                '<path d="M50,50 Q45,45 45,40 Q45,30 55,30 Q70,30 70,45 Q70,65 45,65 Q15,65 15,40 Q15,10 50,10" stroke="#2C3E50" stroke-width="5" fill="none" stroke-linecap="round"/>',
+                // 3. Mini Heart
+                '<path d="M50,30 C35,10 10,25 10,50 C10,75 50,90 50,90 C50,90 90,75 90,50 C90,25 65,10 50,30 Z" stroke="#e11d48" stroke-width="4" fill="none"/>',
+                // 4. Exclamation Point
+                <svg viewBox="0 0 100 100" class="stroke-charcoal fill-none"><path d="M50,15 L50,65 M50,80 L50,85" stroke-width="8" stroke-linecap="round"/></svg>,
+                // 5. Flower
+                '<circle cx="50" cy="50" r="10" stroke="#517594" stroke-width="3" fill="none"/><circle cx="50" cy="30" r="8" stroke="#517594" stroke-width="3" fill="none"/><circle cx="50" cy="70" r="8" stroke="#517594" stroke-width="3" fill="none"/><circle cx="30" cy="50" r="8" stroke="#517594" stroke-width="3" fill="none"/><circle cx="70" cy="50" r="8" stroke="#517594" stroke-width="3" fill="none"/>',
+                // 6. Wave line
+                '<path d="M10,50 Q30,30 50,50 Q70,70 90,50" stroke="#517594" stroke-width="4" fill="none" stroke-linecap="round"/>'
+            ];
+
+            // Generating 55 highly scattered visible doodles
+            for (let i = 0; i < 55; i++) {
+                const doodleDiv = document.createElement('div');
+                doodleDiv.className = 'dynamic-doodle float-doodle';
+                
+                // Random position settings
+                const xPos = Math.random() * 92; // safe borders
+                const yPos = Math.random() * 92;
+                const size = 16 + Math.random() * 24; // size between 16px and 40px
+                const rotation = Math.random() * 360;
+                const duration = 4 + Math.random() * 5;
+                const delay = Math.random() * 4;
+
+                doodleDiv.style.left = `${xPos}%`;
+                doodleDiv.style.top = `${yPos}%`;
+                doodleDiv.style.width = `${size}px`;
+                doodleDiv.style.height = `${size}px`;
+                doodleDiv.style.animationDuration = `${duration}s`;
+                doodleDiv.style.animationDelay = `${delay}s`;
+                doodleDiv.style.transform = `rotate(${rotation}deg)`;
+                
+                // Visible opacity ranging from 0.85 to 1.0 (Highly visible as requested!)
+                doodleDiv.style.opacity = 0.8 + Math.random() * 0.2;
+
+                const pathIndex = i % doodlePaths.length;
+                let svgTemplate = '';
+                if (typeof doodlePaths[pathIndex] === 'string' && doodlePaths[pathIndex].startsWith('<path') || doodlePaths[pathIndex].startsWith('<circle')) {
+                    svgTemplate = `<svg viewBox="0 0 100 100" class="w-full h-full">${doodlePaths[pathIndex]}</svg>`;
+                } else {
+                    svgTemplate = `<svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none"><path d="M50,15 L50,65 M50,85 L50,85" stroke-width="10" stroke-linecap="round"/></svg>`;
+                }
+
+                doodleDiv.innerHTML = svgTemplate;
+                
+                // Hover audio reactivity chimes trigger
+                doodleDiv.addEventListener('mouseenter', () => {
+                    playScale(pathIndex);
+                });
+
+                container.appendChild(doodleDiv);
+            }
         }
 
         // LIVE LOCKSCREEN CLOCK UPDATE
@@ -1096,10 +1067,14 @@
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
             gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, archives => 2.5, audioCtx.currentTime + 2.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, DogCtxPlayTime() + 2.5);
             
             osc.start();
             osc.stop(audioCtx.currentTime + 2.5);
+        }
+
+        function DogCtxPlayTime() {
+            return audioCtx.currentTime;
         }
 
         function toggleAudio() {
@@ -1111,14 +1086,14 @@
             initAudio();
 
             if (ambientPlaying) {
-                icon.className = 'fa-solid fa-volume-high';
+                icon.className = 'fa-solid fa-bell-slash';
                 btnText.innerText = 'Chimes đang bật';
                 btn.classList.add('bg-emerald-100', 'text-emerald-700');
                 
                 ambientInterval = setInterval(playAmbientChime, 2500);
                 playScale(4);
             } else {
-                icon.className = 'fa-solid fa-volume-xmark';
+                icon.className = 'fa-solid fa-bell';
                 btnText.innerText = 'Bật Chimes';
                 btn.classList.remove('bg-emerald-100', 'text-emerald-700');
                 
@@ -1127,58 +1102,6 @@
                 }
             }
         }
-
-        // DRAGGABLE STICKER LOGIC
-        function makeStickerDraggable(elementId) {
-            const el = document.getElementById(elementId);
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-            el.onmousedown = dragMouseDown;
-            el.ontouchstart = dragMouseDown;
-
-            function dragMouseDown(e) {
-                e = e || window.event;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                pos3 = clientX;
-                pos4 = clientY;
-                
-                document.onmouseup = closeDragElement;
-                document.ontouchend = closeDragElement;
-                document.onmousemove = elementDrag;
-                document.ontouchmove = elementDrag;
-                
-                el.style.transform = "scale(1.1) rotate(5deg)";
-            }
-
-            function elementDrag(e) {
-                e = e || window.event;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-                pos1 = pos3 - clientX;
-                pos2 = pos4 - clientY;
-                pos3 = clientX;
-                pos4 = clientY;
-
-                el.style.top = (el.offsetTop - pos2) + "px";
-                el.style.left = (el.offsetLeft - pos1) + "px";
-            }
-
-            function closeDragElement() {
-                document.onmouseup = null;
-                document.ontouchend = null;
-                document.onmousemove = null;
-                document.ontouchmove = null;
-                el.style.transform = "scale(1.0) rotate(0deg)";
-            }
-        }
-        makeStickerDraggable('sticker-cat');
-        makeStickerDraggable('sticker-star');
-        makeStickerDraggable('sticker-spiral');
-        makeStickerDraggable('sticker-excl');
-        makeStickerDraggable('sticker-heart');
 
         // TAB NAVIGATION CONTROLLER
         function switchTab(tabName) {
@@ -1208,6 +1131,11 @@
             if (activeMobNav) {
                 activeMobNav.className = 'mobile-nav-btn flex flex-col items-center text-slateBlue';
             }
+
+            // THOROUGH FIX FOR CANVAS INITIALIZATION BUG: Resize immediately when playground tab is shown!
+            if (tabName === 'playground') {
+                setTimeout(resizeCanvas, 100);
+            }
         }
 
         // INNER PROJECT SUB-TABS NAVIGATION CONTROLLER
@@ -1228,37 +1156,20 @@
             activeBtn.className = 'inner-tab-btn px-3 py-1 text-[11px] font-bold rounded-full border border-charcoal bg-slateBlue text-white transition-all';
         }
 
-        // BÀI 1 INNER SUB-TAB TOGGLE SYSTEM
-        function toggleSubProjectOne(subKey) {
-            playScale(5);
-            document.getElementById('sub1a-content').classList.add('hidden');
-            document.getElementById('sub1a-content').classList.remove('block');
-            document.getElementById('sub1b-content').classList.add('hidden');
-            document.getElementById('sub1b-content').classList.remove('block');
-
-            document.getElementById(`sub${subKey}-content`).classList.remove('hidden');
-            document.getElementById(`sub${subKey}-content`).classList.add('block');
-
-            document.querySelectorAll('.sub-proj-btn').forEach(btn => {
-                btn.className = 'sub-proj-btn px-3 py-1 text-xs font-bold hover:bg-gray-100 text-charcoal rounded border border-charcoal';
-            });
-            document.getElementById(`btn-sub${subKey}`).className = 'sub-proj-btn px-3 py-1 text-xs font-bold bg-slateBlue text-white rounded border border-charcoal';
-        }
-
-        // MACOS FINDER WALKTHROUGH STEPS SYSTEM (Based on PDF 1)
+        // MACOS FINDER WALKTHROUGH STEPS SYSTEM (BASED EXCLUSIVELY ON PDF 1 - NO ILLUSTRATIVE DATA TREES)
         const walkthroughSteps = [
-            { title: "Bước 1: Mở Finder", desc: "Mở trình quản lý Finder từ thanh Dock của hệ điều hành MacOS.", file: "Vị trí: Dock" },
-            { title: "Bước 2: Chọn mục tài liệu", desc: "Nhấp chọn thư mục 'Tài liệu' (Documents) ở thanh điều hướng bên trái Finder.", file: "Vị trí: /Users/NguyenHaiNgocChau/Documents" },
-            { title: "Bước 3: Tạo thư mục", desc: "Tạo thư mục cha mới và đặt tên là 'Thuchanh_NguyenHaiNgocChau' để phục vụ lưu trữ.", file: "📂 ThucHanh_NguyenHaiNgocChau" },
-            { title: "Bước 4: Nhấn vào thư mục vừa tạo", desc: "Kích đúp chuột để tiến vào bên trong không gian làm việc của thư mục mới tạo.", file: "📂 ThucHanh_NguyenHaiNgocChau/" },
-            { title: "Bước 5: Tạo tệp tin văn bản", desc: "Tạo một tài liệu văn bản thô mới có tên khởi đầu là 'Ghichu.txt'.", file: "📄 ThucHanh_NguyenHaiNgocChau/Ghichu.txt" },
-            { title: "Bước 6: Đổi tên tệp tin", desc: "Thay đổi tên tệp tin để dễ định danh hơn thành: 'Ghichuquantrong.txt'.", file: "📄 ThucHanh_NguyenHaiNgocChau/Ghichuquantrong.txt" },
-            { title: "Bước 7: Tạo thư mục con", desc: "Tạo thêm một thư mục con nằm ở cấp bên trong và đặt tên là 'Tailieu'.", file: "📂 ThucHanh_NguyenHaiNgocChau/Tailieu" },
-            { title: "Bước 8: Sao chép tệp tin", desc: "Sử dụng thao tác Copy (Ctrl+C) tệp 'Ghichuquantrong.txt' và dán (Ctrl+V) nhân bản sang thư mục con 'Tailieu'.", file: "📄 Tailieu/Ghichuquantrong.txt (Bản sao)" },
-            { title: "Bước 9: Di chuyển tệp tin", desc: "Tạo tệp 'Dichuyen.txt' ở thư mục cha, sử dụng tổ hợp phím Cut & Paste để di chuyển tệp này vào bên trong thư mục con 'Tailieu'.", file: "📄 Tailieu/Dichuyen.txt (Đã dịch chuyển)" },
-            { title: "Bước 10: Xóa tệp tin", desc: "Thực hiện nhấp chuột phải vào tệp 'Ghichuquantrong.txt' ở thư mục con và chọn 'Chuyển vào Thùng rác' (Move to Trash).", file: "🗑️ Thùng rác chứa: Ghichuquantrong.txt" },
-            { title: "Bước 11: Xóa vĩnh viễn", desc: "Nhấn giữ phím Shift + Delete đối với tệp 'Dichuyen.txt' để giải phóng vĩnh viễn khỏi hệ thống mà không qua Thùng rác.", file: "Trạng thái: Đã xóa vĩnh viễn" },
-            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác, nhấp chuột phải vào 'Ghichuquantrong.txt' và chọn 'Đưa trở lại' (Restore) để phục hồi tệp về chỗ cũ.", file: "📄 ThucHanh_NguyenHaiNgocChau/Tailieu/Ghichuquantrong.txt (Khôi phục)" }
+            { title: "Bước 1: Mở Finder", desc: "Khởi chạy ứng dụng Finder từ thanh Dock của hệ điều hành MacOS.", file: "Vị trí: Dock MacOS" },
+            { title: "Bước 2: Chọn mục Tài liệu", desc: "Nhấp chọn thư mục 'Tài liệu' (Documents) ở danh mục ưa thích thanh điều hướng bên trái Finder.", file: "Vị trí: Finder -> Mục Tài liệu" },
+            { title: "Bước 3: Tạo thư mục", desc: "Tạo thư mục cha mới tại mục Tài liệu và đặt tên thư mục là 'Thuchanh_NguyenHaiNgocChau' để phục vụ việc phân loại dữ liệu.", file: "📂 Thuchanh_NguyenHaiNgocChau" },
+            { title: "Bước 4: Nhấn vào thư mục vừa tạo", desc: "Kích đúp chuột tiến hành vào bên trong thư mục 'Thuchanh_NguyenHaiNgocChau' vừa thiết lập.", file: "📂 Thuchanh_NguyenHaiNgocChau/ (Hiện hành)" },
+            { title: "Bước 5: Tạo tệp tin văn bản", desc: "Tạo một tài liệu văn bản thô mới (.txt) đặt tên là 'Ghichu.txt' nằm ở thư mục hiện hành.", file: "📄 Ghichu.txt" },
+            { title: "Bước 6: Đổi tên tệp tin", desc: "Thay đổi tên tệp tin văn bản vừa tạo thành tên mới: 'Ghichuquantrong.txt'.", file: "📄 Ghichuquantrong.txt" },
+            { title: "Bước 7: Tạo thư mục con", desc: "Tiến hành tạo thêm một thư mục con nằm ở cấp bên trong thư mục cha, đặt tên là 'Tailieu'.", file: "📂 Tailieu" },
+            { title: "Bước 8: Sao chép tệp tin", desc: "Nhấp chuột phải vào tệp 'Ghichuquantrong.txt' ở thư mục cha chọn Copy, đi vào thư mục con 'Tailieu' nhấp chuột phải chọn Paste (hoặc nhấn Ctrl+V).", file: "📂 Tailieu/ 📄 Ghichuquantrong.txt (Bản sao)" },
+            { title: "Bước 9: Di chuyển tệp tin", desc: "Quay lại thư mục cha tạo một tệp tin văn bản mới đặt tên là 'Dichuyen.txt'. Thực hiện thao tác Cut & Paste để di chuyển tệp này vào bên trong thư mục con 'Tailieu'.", file: "📂 Tailieu/ 📄 Dichuyen.txt (Dịch chuyển)" },
+            { title: "Bước 10: Xóa tệp tin", desc: "Đi vào thư mục con 'Tailieu', nhấp chuột phải vào tệp 'Ghichuquantrong.txt' chọn 'Chuyển vào Thùng rác' (Move to Trash).", file: "🗑️ Thùng rác chứa: Ghichuquantrong.txt" },
+            { title: "Bước 11: Xóa vĩnh viễn", desc: "Chọn tệp 'Dichuyen.txt' nằm trong thư mục con 'Tailieu' nhấp phím Shift + Delete trên bàn phím để xóa vĩnh viễn tệp ra khỏi máy tính.", file: "Trạng thái: Đã xóa vĩnh viễn khỏi MacOS" },
+            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác trên màn hình nền, nhấp chuột phải vào tệp 'Ghichuquantrong.txt' đã xóa và chọn 'Đưa trở lại' (Restore) để khôi phục tệp về đúng vị trí cũ.", file: "📂 Tailieu/ 📄 Ghichuquantrong.txt (Phục hồi)" }
         ];
 
         let currentStepIndex = 0;
@@ -1267,20 +1178,23 @@
             const step = walkthroughSteps[currentStepIndex];
             document.getElementById('step-title').innerText = step.title;
             document.getElementById('step-desc').innerText = step.desc;
-            document.getElementById('step-preview-file').innerText = step.file;
+            document.getElementById('step-preview-file').innerText = `Thuộc tính hiện hành: ${step.file}`;
             document.getElementById('step-counter').innerText = `${currentStepIndex + 1} / 12`;
             
-            // Sync side button highlight
-            document.querySelectorAll('.step-lbl-btn').forEach(btn => {
-                btn.className = 'step-lbl-btn w-full text-left p-2 rounded text-[11px] font-semibold border border-charcoal/10 hover:bg-gray-100 text-charcoal';
-            });
-            document.getElementById(`lbl-step-${currentStepIndex}`).className = 'step-lbl-btn w-full text-left p-2 rounded text-[11px] font-bold border border-charcoal/10 bg-slateBlue text-white';
-
+            // Highlight step list item
+            for (let i = 0; i < 12; i++) {
+                const btn = document.getElementById(`step-btn-${i}`);
+                if (i === currentStepIndex) {
+                    btn.className = "cursor-pointer p-1.5 rounded text-[10px] font-bold bg-slateBlue text-white border border-charcoal/10";
+                } else {
+                    btn.className = "cursor-pointer p-1.5 rounded text-[10px] font-semibold hover:bg-lightBlue text-charcoal border border-charcoal/10";
+                }
+            }
             playScale(currentStepIndex);
         }
 
-        function goToMacStep(stepIndex) {
-            currentStepIndex = stepIndex;
+        function setStep(idx) {
+            currentStepIndex = idx;
             updateWalkthroughDisplay();
         }
 
@@ -1298,21 +1212,7 @@
             }
         }
 
-        // FOLDER TREES EXPANSIONS (Bài tập 1)
-        function toggleFolder(folderId) {
-            playScale(6);
-            const folder = document.getElementById(folderId);
-            const icon = document.getElementById(`icon-${folderId}`);
-            if (folder.classList.contains('hidden')) {
-                folder.classList.remove('hidden');
-                icon.className = 'fa-regular fa-folder-open text-amber-500';
-            } else {
-                folder.classList.add('hidden');
-                icon.className = 'fa-regular fa-folder text-amber-500';
-            }
-        }
-
-        // INTERACTIVE FILE PROPERTIES INJECTOR (Bài tập 1)
+        // INTERACTIVE FILE PROPERTIES INJECTOR (Bài tập 1 b)
         const fileProperties = {
             Lop: {
                 title: "1. Tài liệu học trên lớp",
@@ -1397,6 +1297,7 @@
                 if (i < text.length) {
                     consoleEl.innerText += text.charAt(i);
                     playTypewriterKeySound();
+                    index = i;
                     i++;
                 } else {
                     clearInterval(typewriterInterval);
@@ -1446,13 +1347,15 @@
             container.innerHTML = infographicVersions[versionKey];
         }
 
-        // CANVAS ADVANCED DOODLE PAINT DRAWING APPARATUS (RESOLVED CLICKS BLOCKING AND DRAWING NETS BUG)
+        // CANVAS ADVANCED DOODLE PAINT DRAWING APPARATUS (Thoroughly Fixed Mouse/Touch Drawing Bug)
         const canvas = document.getElementById('doodleCanvas');
         const ctx = canvas.getContext('2d');
         const canvasContainer = document.getElementById('canvas-container');
-        let isDrawing = false;
-        let canvasLastX = 0;
-        let canvasLastY = 0;
+        let painting = false;
+        let brushColor = '#2C3E50';
+        let drawingHistory = [];
+        let lastX = 0;
+        let lastY = 0;
 
         function saveCanvasState() {
             drawingHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
@@ -1471,10 +1374,16 @@
             }
         }
 
+        // Robust canvas resizing and state conservation
         function resizeCanvas() {
+            // Guard clause to prevent resizing to 0 width
+            if (!canvasContainer || canvasContainer.clientWidth === 0) return;
+            
+            // Backup existing drawings
             let tempImgData = canvas.toDataURL();
+            
             canvas.width = canvasContainer.clientWidth;
-            canvas.height = 320;
+            canvas.height = 320; // fixed display height resolution
             
             let img = new Image();
             img.src = tempImgData;
@@ -1483,39 +1392,44 @@
             }
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        setTimeout(resizeCanvas, 150);
-
-        // Core Drawing Functions with scaling correction to resolve missing lines bug
+        // Core Drawing Functions (Using clean coordinate scaling to prevent drawing bugs)
         function getCoordinates(e) {
             const rect = canvas.getBoundingClientRect();
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            const x = (clientX - rect.left) * (canvas.width / rect.width);
-            const y = (clientY - rect.top) * (canvas.height / rect.height);
-            return { x, y };
+            
+            // Safe division checks
+            const scaleX = rect.width ? (canvas.width / rect.width) : 1;
+            const scaleY = rect.height ? (canvas.height / rect.height) : 1;
+            
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
         }
 
-        function startDrawing(e) {
+        function startPosition(e) {
             initAudio();
             saveCanvasState();
-            isDrawing = true;
+            painting = true;
+
             const coords = getCoordinates(e);
-            canvasLastX = coords.x;
-            canvasLastY = coords.y;
+            lastX = coords.x;
+            lastY = coords.y;
         }
 
-        function stopDrawing() {
-            isDrawing = false;
+        function finishedPosition() {
+            painting = false;
             ctx.beginPath();
         }
 
         function draw(e) {
-            if (!isDrawing) return;
+            if (!painting) return;
+
             const coords = getCoordinates(e);
 
             ctx.beginPath();
-            ctx.moveTo(canvasLastX, canvasLastY);
+            ctx.moveTo(lastX, lastY);
             ctx.lineTo(coords.x, coords.y);
 
             const size = document.getElementById('brushSize').value;
@@ -1525,48 +1439,25 @@
             ctx.strokeStyle = brushColor;
             ctx.stroke();
 
-            canvasLastX = coords.x;
-            canvasLastY = coords.y;
+            // Set current coordinates as previous coordinates
+            lastX = coords.x;
+            lastY = coords.y;
         }
 
-        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousedown', startPosition);
+        canvas.addEventListener('mouseup', finishedPosition);
         canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
+        canvas.addEventListener('mouseout', finishedPosition);
 
         canvas.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            startDrawing(e);
+            startPosition(e);
         });
+        canvas.addEventListener('touchend', finishedPosition);
         canvas.addEventListener('touchmove', (e) => {
             e.preventDefault();
             draw(e);
         });
-        canvas.addEventListener('touchend', stopDrawing);
-
-        function setBrushColor(color) {
-            playScale(1);
-            brushColor = color;
-        }
-
-        function setEraser() {
-            playScale(3);
-            brushColor = '#ffffff';
-        }
-
-        function clearCanvas() {
-            playScale(2);
-            saveCanvasState();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function exportCanvas() {
-            playScale(5);
-            const link = document.createElement('a');
-            link.download = 'digital_doodle_art.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        }
     </script>
 </body>
 </html>
