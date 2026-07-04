@@ -110,7 +110,7 @@
 
     <!-- BACKGROUND AUDIO ASSETS (Piano music & Procedural key sounds) -->
     <!-- Soft royalty-free piano music by Liborio Conti -->
-    <audio id="bg-piano" loop preload="auto" src="https://www.no-copyright-music.com/wp-content/uploads/2021/09/OnAPianoCloud.mp3"></audio>
+    <audio id="bg-piano" loop preload="auto" autoplay src="https://www.no-copyright-music.com/wp-content/uploads/2021/09/OnAPianoCloud.mp3"></audio>
 
     <!-- 10X MASSIVE & DIVERSE CRISP INTERACTIVE BACKGROUND DOODLES (Draggable & Hover-Audio Reacting) -->
     <!-- Row 1 Doodles -->
@@ -239,7 +239,7 @@
                 </span>
             </div>
             <!-- Horizontal menu bar tabs -->
-            <div class="flex flex-wrap gap-2 animate-bounce" id="top-nav-menu" style="animation-duration: 4s;">
+            <div class="flex flex-wrap gap-2" id="top-nav-menu">
                 <button onclick="switchTab('home')" id="nav-home" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all">
                     <i class="fa-solid fa-house"></i> Giới thiệu
                 </button>
@@ -356,7 +356,7 @@
                                         <i class="fa-brands fa-apple text-slateBlue"></i> Quy trình thao tác Finder
                                     </h4>
                                     <div class="flex gap-1">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-red-400 animate-ping"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
                                         <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
                                         <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
                                     </div>
@@ -838,7 +838,7 @@
                                     <button onclick="setBrushColor('#2C3E50')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-charcoal" title="Đen Charcoal"></button>
                                     <button onclick="setBrushColor('#517594')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-slateBlue" title="Xanh Slate"></button>
                                     <button onclick="setBrushColor('#e11d48')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-rose-600" title="Đỏ Rose"></button>
-                                    <button onclick="setEraser()" class="w-8 h-8 rounded-full border-2 border-charcoal bg-white flex items-center justify-center text-charcoal hover:bg-gray-100" title="Chế độ Tẩy"><i class="fa-solid fa-eraser text-xs"></i></button>
+                                    <button onclick="setEraser()" class="w-8 h-8 rounded-full border-2 border-charcoal bg-white flex items-center justify-center text-charcoal hover:bg-gray-100" title="Cọ Tẩy"><i class="fa-solid fa-eraser text-xs"></i></button>
                                 </div>
                             </div>
                             <!-- Brush thickness -->
@@ -876,30 +876,32 @@
         // Set volume to maximum on page entry as requested
         bgPiano.volume = 1.0;
 
-        // Attempt autoplay on load
-        document.addEventListener('DOMContentLoaded', () => {
-            const autoplayPromise = bgPiano.play();
-            if (autoplayPromise !== undefined) {
-                autoplayPromise.then(() => {
-                    isMusicPlaying = true;
-                    updateMusicUI();
-                }).catch(error => {
-                    console.log("Autoplay was blocked by browser. Music will play upon first interaction.");
-                    
-                    // Fallback to start playing on first click/touch interaction anywhere
-                    const startPlayOnInteraction = () => {
-                        bgPiano.play().then(() => {
-                            isMusicPlaying = true;
-                            updateMusicUI();
-                            // Cleanup event listeners
-                            document.removeEventListener('click', startPlayOnInteraction);
-                            document.removeEventListener('touchstart', startPlayOnInteraction);
-                        });
-                    };
-                    document.addEventListener('click', startPlayOnInteraction);
-                    document.addEventListener('touchstart', startPlayOnInteraction);
-                });
-            }
+        // Broad events array to trigger autoplay immediately on first gesture/scrolling/interaction
+        const autoplayEvents = ['click', 'mousedown', 'touchstart', 'keydown', 'scroll', 'mousemove'];
+
+        function attemptAutoplay() {
+            bgPiano.play().then(() => {
+                isMusicPlaying = true;
+                updateMusicUI();
+                removeAutoplayTriggers();
+            }).catch(error => {
+                console.log("Direct autoplay prevented by browser. Active listeners awaiting interaction.");
+            });
+        }
+
+        function removeAutoplayTriggers() {
+            autoplayEvents.forEach(event => {
+                document.removeEventListener(event, attemptAutoplay);
+            });
+        }
+
+        // Try playing immediately upon document load
+        window.addEventListener('DOMContentLoaded', () => {
+            attemptAutoplay();
+            // Bind fallback triggers
+            autoplayEvents.forEach(event => {
+                document.addEventListener(event, attemptAutoplay, { once: true, passive: true });
+            });
         });
 
         function updateMusicUI() {
@@ -1021,7 +1023,7 @@
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
             gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, office.currentTime + 2.5);
             
             osc.start();
             osc.stop(audioCtx.currentTime + 2.5);
@@ -1171,7 +1173,7 @@
             { title: "Bước 9: Di chuyển tệp tin", desc: "Tạo tệp 'Dichuyen.txt' ở thư mục cha, sử dụng tổ hợp phím Cut & Paste để di chuyển tệp này vào bên trong thư mục con 'Tailieu'.", file: "📄 Tailieu/Dichuyen.txt (Đã dịch chuyển)" },
             { title: "Bước 10: Xóa tệp tin", desc: "Thực hiện nhấp chuột phải vào tệp 'Ghichuquantrong.txt' ở thư mục con và chọn 'Chuyển vào Thùng rác' (Move to Trash).", file: "🗑️ Thùng rác chứa: Ghichuquantrong.txt" },
             { title: "Bước 11: Xóa vĩnh viễn", desc: "Nhấn giữ phím Shift + Delete đối với tệp 'Dichuyen.txt' để giải phóng vĩnh viễn khỏi hệ thống mà không qua Thùng rác.", file: "Trạng thái: Đã xóa vĩnh viễn" },
-            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác, nhấp chuột phải vào 'Ghichuquantrong.txt' và chọn 'Đưa trở lại' (Restore) để phục hồi tệp về chỗ cũ.", file: "📄 ThucHanh_NguyenHaiNgocChau/Tailieu/Ghichuquantrong.txt (Khôi phục)" }
+            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác, nhấp chuột phải vào 'Ghichuquantrong.txt' và chọn 'Đưa trở lại' (Restore) để phục hồi tệp về chỗ cũ.", file: "📄 Tailieu/Ghichuquantrong.txt (Khôi phục)" }
         ];
 
         let currentStepIndex = 0;
@@ -1362,6 +1364,7 @@
             ctx.beginPath();
         }
 
+        // Bulletproof coordinate scale math connecting lastX/Y and currentX/Y to draw flawlessly
         function draw(e) {
             if (!painting) return;
 
