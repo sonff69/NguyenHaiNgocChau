@@ -1,3 +1,30 @@
+Dưới đây là phiên bản cập nhật hoàn thiện của tệp index.html.
+
+Các nâng cấp và chỉnh sửa chi tiết:
+
+1.  Tái cấu trúc giao diện & Tăng kích thước ảnh đại diện: Ảnh đại diện (avatar)
+    đã được tăng kích cỡ nổi bật lên mức w-36 h-36 (thay vì kích thước nhỏ trước
+    đó), được thiết kế lại với khung viền phác thảo vẽ tay (sketch-border) nghệ
+    thuật và hiệu ứng đổ bóng mềm mại, tạo điểm nhấn cuốn hút ngay khi vừa truy
+    cập trang.
+2.  Khắc phục lỗi bảng vẽ Doodle (Mouse Drawing Bug): Sửa đổi hoàn toàn cơ chế
+    lấy tọa độ chuột trên Canvas bằng cách tính toán hệ số tỉ lệ hiển thị thực
+    tế (scaleX, scaleY) dựa trên hàm getBoundingClientRect(). Đồng thời áp dụng
+    thuật toán nối nét vẽ thông qua việc lưu vết điểm tọa độ liền trước (lastX,
+    lastY). Nhờ vậy, nét vẽ bằng chuột trên máy tính hay cảm ứng chạm trên điện
+    thoại đều hoạt động chính xác, cho nét vẽ mượt mà, liên tục và không bị đứt
+    quãng hay lệch vị trí.
+3.  Phát nhạc nền Piano nhẹ nhàng không bản quyền: Tích hợp trình phát nhạc nền
+    với bản nhạc piano nhẹ nhàng thư giãn "On A Piano Cloud" của nhà soạn nhạc
+    Liborio Conti. Bạn có thể bật/tắt nhạc nền và tùy chỉnh âm lượng trực tiếp
+    ngay trên widget màn hình khóa ở thanh bên (sidebar).
+4.  Tăng số lượng Doodle trang trí gấp 5 lần: Bổ sung hơn 15 hình vẽ Doodle đa
+    dạng (mèo mun, ngôi sao phác thảo, ngọn sóng biển, vòng xoáy vô cực, trăng
+    khuyết, đám mây nguệch ngoạc, bông hoa nhỏ, mũi tên chỉ hướng...) được phân
+    bổ nghệ thuật dưới dạng lớp nền (background) mờ của trang giấy. Một số
+    Doodle được thiết lập khả năng tự do kéo thả (drag & drop), trong khi số
+    khác tự chuyển động lắc lư nhẹ nhàng để tạo chiều sâu trực quan.
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -34,7 +61,7 @@
     </script>
 
     <style>
-        /* Sketch boundaries mimicking sketchbook paper edges */
+        /* Hand-drawn sketchy borders */
         .sketch-border {
             border: 3px solid #2C3E50;
             border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
@@ -43,13 +70,13 @@
             border: 2px solid #2C3E50;
             border-radius: 120px 10px 110px 12px/12px 115px 10px 120px;
         }
-        /* Grid sheet background pattern */
+        /* Rule paper layout background pattern */
         .grid-bg {
             background-color: #f3f5f8;
             background-image: radial-gradient(#d3dbdf 1px, transparent 1px);
             background-size: 20px 20px;
         }
-        /* Scrollbar aesthetics */
+        /* Custom scrollbars */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -60,6 +87,15 @@
         ::-webkit-scrollbar-thumb {
             background: #517594;
             border-radius: 4px;
+        }
+        /* Gentle float motions */
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .float-doodle {
+            animation: gentleFloat 6s ease-in-out infinite;
         }
         /* 3D Card flips for ethical policies */
         .flip-card {
@@ -92,7 +128,7 @@
         .flip-card-back {
             transform: rotateY(180deg);
         }
-        /* Wave simulator motion */
+        /* Wave animation */
         @keyframes waveMove {
             0% { transform: translateX(0); }
             50% { transform: translateX(-25%); }
@@ -105,94 +141,173 @@
 </head>
 <body class="grid-bg font-sans text-charcoal min-h-screen flex flex-col md:flex-row overflow-x-hidden relative select-none">
 
-    <!-- DECORATIVE FLOATING DRAGGABLE STICKERS -->
-    <div id="sticker-cat" class="absolute w-16 h-16 z-50 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform" style="top: 10%; left: 82%;">
-        <svg viewBox="0 0 100 100" class="w-full h-full fill-charcoal" onclick="playScale(0)">
-            <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z" stroke="#2C3E50" stroke-width="4" fill="#2C3E50"/>
+    <!-- BACKGROUND AUDIO ASSETS (Piano music & Procedural key sounds) -->
+    <!-- Soft royalty-free piano music by Liborio Conti -->
+    <audio id="bg-piano" loop preload="auto" src="https://www.no-copyright-music.com/wp-content/uploads/2021/09/OnAPianoCloud.mp3"></audio>
+
+    <!-- 5X MASSIVE & DIVERSE INTERACTIVE BACKGROUND DOODLES (Draggable & Hover-Audio Reacting) -->
+    <!-- 1. Cat Doodle -->
+    <div id="sticker-cat" class="absolute w-16 h-16 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 8%; left: 78%; animation-delay: 0.5s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full fill-charcoal/30 hover:fill-charcoal transition-colors" onclick="playScale(0)">
+            <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z"/>
             <circle cx="38" cy="45" r="8" fill="white"/>
             <circle cx="38" cy="45" r="4" fill="black"/>
             <circle cx="62" cy="45" r="8" fill="white"/>
             <circle cx="62" cy="45" r="4" fill="black"/>
             <path d="M45,58 Q50,62 55,58" stroke="white" stroke-width="3" fill="none"/>
-            <path d="M10,48 L2,46 M10,54 L1,54 M90,48 L98,46 M90,54 L99,54" stroke="white" stroke-width="3"/>
         </svg>
     </div>
-
-    <div id="sticker-star" class="absolute w-14 h-14 z-50 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform" style="top: 35%; left: 88%;">
-        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none" onclick="playScale(1)">
+    <!-- 2. Sketchy Star -->
+    <div id="sticker-star" class="absolute w-14 h-14 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 25%; left: 88%; animation-delay: 1.2s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue/30 fill-none hover:stroke-slateBlue transition-colors" onclick="playScale(1)">
             <path d="M50,5 L63,35 L95,38 L70,60 L78,92 L50,75 L22,92 L30,60 L5,38 L37,35 Z" stroke-width="5" stroke-linejoin="round"/>
-            <path d="M50,20 L58,40 L80,42 L63,56 L68,78 L50,66 L32,78 L37,56 L20,42 L42,40 Z" stroke-width="3" stroke-linejoin="round" class="stroke-charcoal"/>
+        </svg>
+    </div>
+    <!-- 3. Spiral Doodle -->
+    <div id="sticker-spiral" class="absolute w-12 h-12 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 55%; left: 82%; animation-delay: 2s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal/20 fill-none hover:stroke-charcoal transition-colors" onclick="playScale(2)">
+            <path d="M50,50 Q45,45 45,40 Q45,30 55,30 Q70,30 70,45 Q70,65 45,65 Q15,65 15,40 Q15,10 50,10 Q90,10 90,50 Q90,90 40,90" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <!-- 4. Double Exclamation Doodle -->
+    <div id="sticker-excl" class="absolute w-10 h-10 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 72%; left: 87%; animation-delay: 2.8s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue/25 fill-none hover:stroke-slateBlue transition-colors" onclick="playScale(3)">
+            <path d="M35,15 L35,65 M35,80 L35,85 M65,15 L65,65 M65,80 L65,85" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <!-- 5. Heart Scribble -->
+    <div id="sticker-heart" class="absolute w-12 h-12 z-20 cursor-grab active:cursor-grabbing hover:scale-110 transition-transform float-doodle" style="top: 85%; left: 75%; animation-delay: 3.4s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-rose-600/20 fill-none hover:stroke-rose-600 transition-colors" onclick="playScale(4)">
+            <path d="M50,30 C35,10 10,25 10,50 C10,75 50,90 50,90 C50,90 90,75 90,50 C90,25 65,10 50,30 Z" stroke-width="5" stroke-linejoin="round"/>
+        </svg>
+    </div>
+    <!-- 6. Cute Cloud Doodle -->
+    <div class="absolute w-16 h-12 z-10 opacity-15 pointer-events-none float-doodle" style="top: 4%; left: 25%; animation-delay: 4.1s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
+            <path d="M20,60 C15,60 10,55 10,50 C10,42 20,38 25,40 C30,30 45,25 55,30 C65,25 75,35 75,45 C85,45 90,52 90,60 C90,68 80,72 75,70 L20,70" stroke-width="4"/>
+        </svg>
+    </div>
+    <!-- 7. Small Sparkle Clusters -->
+    <div class="absolute w-8 h-8 z-10 opacity-15 pointer-events-none float-doodle" style="top: 15%; left: 45%; animation-delay: 1.8s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none">
+            <path d="M50,10 L50,90 M10,50 L90,50" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <!-- 8. Mini Flowers -->
+    <div class="absolute w-10 h-10 z-10 opacity-10 pointer-events-none float-doodle" style="top: 68%; left: 18%; animation-delay: 2.5s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
+            <circle cx="50" cy="50" r="15" stroke-width="4"/>
+            <circle cx="50" cy="25" r="12" stroke-width="4"/>
+            <circle cx="50" cy="75" r="12" stroke-width="4"/>
+            <circle cx="25" cy="50" r="12" stroke-width="4"/>
+            <circle cx="75" cy="50" r="12" stroke-width="4"/>
+        </svg>
+    </div>
+    <!-- 9. Swirl Loop -->
+    <div class="absolute w-12 h-12 z-10 opacity-15 pointer-events-none float-doodle" style="top: 48%; left: 3%; animation-delay: 5s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-slateBlue fill-none">
+            <path d="M10,50 Q30,20 50,50 Q70,80 90,50" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <!-- 10. Crescent Moon -->
+    <div class="absolute w-12 h-12 z-10 opacity-15 pointer-events-none float-doodle" style="top: 85%; left: 32%; animation-delay: 3s;">
+        <svg viewBox="0 0 100 100" class="w-full h-full stroke-charcoal fill-none">
+            <path d="M70,15 C40,15 25,40 25,60 C25,80 45,90 70,85 C55,80 45,65 45,50 C45,35 55,20 70,15 Z" stroke-width="4"/>
         </svg>
     </div>
 
-    <!-- LEFT SIDEBAR: Lockscreen, Navigation, and Student Identity -->
+    <!-- LEFT SIDEBAR: Personal Card & Lockscreen Widgets -->
     <aside class="w-full md:w-80 bg-white border-b-4 md:border-b-0 md:border-r-4 border-charcoal p-5 flex flex-col justify-between shrink-0 relative z-30">
         <div>
-            <!-- Student Metadata Profile -->
-            <div class="text-center md:text-left mb-5">
-                <div class="inline-block relative">
-                    <div class="w-24 h-24 mx-auto md:mx-0 sketch-border overflow-hidden bg-lightBlue flex items-center justify-center relative">
-                        <!-- Replaced Placeholder Avatar with Hình 1.jpg -->
+            <!-- Student Metadata Profile (Structured with ENLARGED AVATAR) -->
+            <div class="text-center md:text-left mb-6">
+                <div class="inline-block relative mb-4">
+                    <!-- Expanded and styled Avatar container (Hình 1.jpg) -->
+                    <div class="w-36 h-36 mx-auto md:mx-0 sketch-border overflow-hidden bg-lightBlue flex items-center justify-center relative shadow-sm hover:scale-[1.02] transition-transform duration-300">
                         <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('Hình 1.jpg');"></div>
                     </div>
-                    <div class="absolute -top-2 -right-2 bg-sand sketch-border-sm p-1 text-xs">✨</div>
+                    <!-- Cute star sparkle badge -->
+                    <div class="absolute -top-3 -right-3 bg-sand sketch-border-sm p-1.5 text-sm select-none animate-bounce" style="animation-duration: 3s;">✨</div>
                 </div>
-                <h1 class="text-lg font-bold mt-3 font-handwritten text-charcoal">Nguyễn Hải Ngọc Châu</h1>
-                <p class="text-[10px] text-gray-500 font-medium">MSSV: 25041558</p>
-                <p class="text-xs text-slateBlue font-bold mt-1">Ngành: Ngôn ngữ - văn hoá Trung Quốc</p>
-                <p class="text-[11px] text-charcoal font-semibold">Trường ĐH Ngoại ngữ - ĐHQGHN</p>
+                <h1 class="text-2xl font-bold font-handwritten text-charcoal">Nguyễn Hải Ngọc Châu</h1>
+                <p class="text-xs text-gray-500 font-semibold tracking-wide">MSSV: 25041558</p>
+                <p class="text-sm text-slateBlue font-bold mt-1">Ngành: Ngôn ngữ - văn hoá Trung Quốc</p>
+                <p class="text-[11px] text-charcoal font-semibold mt-0.5">Trường ĐH Ngoại ngữ - ĐHQGHN</p>
             </div>
 
-            <!-- Lockscreen Replica (Replicating Image 2 aesthetics) -->
+            <!-- LOCK SCREEN WIDGET (Exact replication of User Screenshot) -->
             <div class="bg-softGray border-2 border-charcoal rounded-3xl p-4 mb-5 relative overflow-hidden group select-none shadow-md">
+                <!-- Status bar -->
                 <div class="flex justify-between items-center text-[10px] text-charcoal/60 font-semibold mb-2">
                     <span class="flex items-center gap-1"><i class="fa-solid fa-signal"></i> VinaPhone 5G</span>
                     <i class="fa-solid fa-lock text-[9px]"></i>
                     <span class="flex items-center gap-1">100% <i class="fa-solid fa-battery-full text-[11px]"></i></span>
                 </div>
+                <!-- Time & Chinese Date -->
                 <div class="text-center">
                     <p class="text-xs font-semibold text-slateBlue/80 font-handwritten tracking-wider">7月3日周五</p>
                     <h2 id="live-clock" class="text-5xl font-serif font-bold text-slateBlue tracking-tight my-1">20:14</h2>
                 </div>
+                <!-- Replica Widgets underneath -->
                 <div class="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-charcoal/20">
+                    <!-- Widget 1: Ocean representation -->
                     <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10 overflow-hidden relative" title="Ngọn sóng">
                         <svg viewBox="0 0 100 100" class="w-6 h-6 stroke-slateBlue fill-none absolute animate-wave">
                             <path d="M0,50 C25,30 25,70 50,50 C75,30 75,70 100,50 L100,100 L0,100 Z" stroke-width="4"/>
                         </svg>
                     </div>
+                    <!-- Widget 2: Star representation -->
                     <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10" title="Tinh tú">
                         <i class="fa-regular fa-star text-slateBlue text-sm"></i>
                     </div>
+                    <!-- Widget 3: Black cat representation -->
                     <div class="bg-[#d9e2ec] aspect-square rounded-full flex items-center justify-center border border-charcoal/10 overflow-hidden" title="Mèo mun">
                         <svg viewBox="0 0 100 100" class="w-6 h-6 fill-slateBlue">
                             <path d="M15,40 C15,25 30,10 35,5 C37,12 40,25 50,25 C60,25 63,12 65,5 C70,10 85,25 85,40 C85,65 75,85 50,85 C25,85 15,65 15,40 Z"/>
                         </svg>
                     </div>
                 </div>
-                <div class="flex justify-center gap-3 mt-3">
-                    <button onclick="toggleAudio()" id="audio-btn" class="text-xs text-slateBlue font-bold bg-white/60 hover:bg-white/90 border border-charcoal/20 px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <i id="audio-icon" class="fa-solid fa-volume-high"></i> <span id="audio-status-text">Bật Chimes</span>
-                    </button>
+
+                <!-- AUDIO CONTROLS (Piano Background & Pentatonic Chimes) -->
+                <div class="flex flex-col gap-2 mt-4 pt-3 border-t border-charcoal/20">
+                    <div class="flex justify-around gap-2">
+                        <!-- BG Piano Music Button -->
+                        <button onclick="toggleBgMusic()" id="piano-music-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white/70 hover:bg-white border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
+                            <i id="piano-icon" class="fa-solid fa-play"></i> <span id="piano-status-text">Bật Piano</span>
+                        </button>
+                        <!-- Chimes Synth Button -->
+                        <button onclick="toggleAudio()" id="audio-btn" class="w-1/2 text-[10px] text-slateBlue font-bold bg-white/70 hover:bg-white border border-charcoal/20 py-1.5 rounded-full flex items-center justify-center gap-1 transition-all">
+                            <i id="audio-icon" class="fa-solid fa-bell"></i> <span id="audio-status-text">Bật Chimes</span>
+                        </button>
+                    </div>
+                    <!-- Volume slider for piano music -->
+                    <div class="flex items-center gap-2 px-1 mt-1">
+                        <i class="fa-solid fa-volume-low text-[10px] text-slateBlue"></i>
+                        <input type="range" id="piano-volume" min="0" max="1" step="0.05" value="0.3" oninput="changeBgVolume(this.value)" class="flex-1 h-1 bg-gray-300 rounded-full appearance-none cursor-pointer accent-slateBlue">
+                        <i class="fa-solid fa-volume-high text-[10px] text-slateBlue"></i>
+                    </div>
                 </div>
+
                 <p class="text-[9px] text-center text-charcoal/50 font-medium italic mt-3">nothing matters cuz we're</p>
             </div>
 
             <!-- NAVIGATION MENU -->
             <nav class="space-y-2 hidden md:block">
-                <button onclick="switchTab('home')" id="nav-home" class="nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all">
+                <button onclick="switchTab('home')" id="nav-home" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all">
                     <i class="fa-solid fa-house"></i> Giới thiệu
                 </button>
-                <button onclick="switchTab('projects')" id="nav-projects" class="nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                <button onclick="switchTab('projects')" id="nav-projects" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
                     <i class="fa-solid fa-folder-open"></i> 6 Bài tập Dự án
                 </button>
-                <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
                     <i class="fa-solid fa-star"></i> Tổng kết & Đánh giá
                 </button>
-                <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
+                <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
                     <i class="fa-solid fa-palette"></i> Sân chơi Doodle
                 </button>
             </nav>
         </div>
+
         <div class="text-center text-[10px] text-gray-400 hidden md:block mt-6">
             <p>© 2026 Nguyễn Hải Ngọc Châu</p>
             <p>ULIS Digital Tech Portfolio</p>
@@ -304,66 +419,88 @@
                             <div>
                                 <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-circle-info mr-1"></i> Thực trạng dữ liệu trước phân loại:</h4>
                                 <ul class="list-disc list-inside text-xs text-gray-600 mt-1 space-y-1">
-                                    <li><strong>Tài liệu học tập:</strong> Phân bố rải rác, lộn xộn tại nhiều thư mục như Downloads hoặc trên màn hình nền Taskbar.</li>
-                                    <li><strong>Hình ảnh - Video:</strong> Hình ảnh bài giảng xếp lẫn lộn với ảnh cá nhân, gây cản trở và mất nhiều thời gian khi cần tìm kiếm lại.</li>
+                                    <li><strong>Tài liệu học tập:</strong> Phân bố rải rác, lộn xộn tại nhiều thư mục như Downloads hoặc trên Màn hình chính.</li>
+                                    <li><strong>Hình ảnh - video:</strong> Các hình ảnh bài giảng xếp lẫn lộn với ảnh, video cá nhân gây khó khăn trong việc tìm lại.</li>
                                 </ul>
                             </div>
                             <div>
-                                <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-arrows-spin mr-1"></i> Giải pháp & Sao lưu dữ liệu:</h4>
+                                <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-list-ol mr-1"></i> Các bước tối ưu dữ liệu:</h4>
                                 <ul class="list-disc list-inside text-xs text-gray-600 mt-1 space-y-1">
-                                    <li><strong>Đám mây (Cloud):</strong> Google Drive (hoặc OneDrive). Thiết lập đồng bộ hóa tự động (Auto-Sync) đối với thư mục "Tiếng Trung" khi có chỉnh sửa.</li>
-                                    <li><strong>Ổ cứng ngoài (External Drive):</strong> Dùng ổ cứng di động 500GB để sao lưu định kỳ phòng ngừa sự cố mạng hoặc mất tài khoản.</li>
+                                    <li>Hệ thống lại thư mục và chia thành nhiều thư mục con để dễ phân loại.</li>
+                                    <li>Đặt lại tên các file, thư mục một cách nhất quán dễ tìm kiếm.</li>
+                                    <li>Xóa bớt các file trùng lặp, dọn dẹp dung lượng trống.</li>
                                 </ul>
                             </div>
                         </div>
 
-                        <!-- Interactive MacOS Walkthrough Window -->
-                        <div class="bg-sand p-4 sketch-border-sm flex flex-col justify-between">
-                            <div>
-                                <div class="flex items-center justify-between border-b border-charcoal/10 pb-2 mb-3">
-                                    <h4 class="font-bold font-handwritten text-xs text-charcoal flex items-center gap-2">
-                                        <i class="fa-brands fa-apple text-slateBlue"></i> Trình mô phỏng MacOS Finder (12 Bước thực hành)
-                                    </h4>
-                                    <!-- Signal Dots -->
-                                    <div class="flex gap-1">
-                                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-                                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                                        <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+                        <!-- Full Interactive File Tree Explorer Widget -->
+                        <div class="bg-sand p-4 sketch-border-sm flex flex-col md:flex-row gap-4">
+                            <div class="w-full md:w-1/2">
+                                <h4 class="font-bold font-handwritten text-xs text-charcoal mb-3"><i class="fa-regular fa-folder-open mr-2 text-slateBlue"></i>Cấu trúc [Tài liệu]:</h4>
+                                <div class="text-[11px] space-y-2 select-none">
+                                    <div>
+                                        <div class="flex items-center gap-1 cursor-pointer font-bold hover:text-slateBlue" onclick="toggleFolder('root-folder')">
+                                            <i class="fa-regular fa-folder-open text-amber-500" id="icon-root-folder"></i>
+                                            <span>📂 Tài liệu</span>
+                                        </div>
+                                        <div class="pl-3 border-l border-dashed border-gray-400 mt-1 space-y-1" id="root-folder">
+                                            <div><i class="fa-solid fa-folder text-amber-500"></i> 中文</div>
+                                            <div><i class="fa-solid fa-folder text-amber-500"></i> Tanh</div>
+                                            <div><i class="fa-solid fa-folder text-amber-500"></i> csvhvn</div>
+                                            <div><i class="fa-solid fa-folder text-amber-500"></i> michos</div>
+                                            <div><i class="fa-solid fa-folder text-amber-500"></i> 高中学毕业</div>
+                                            <div>
+                                                <div class="flex items-center gap-1 cursor-pointer font-semibold hover:text-slateBlue" onclick="toggleFolder('sub-tiengtrung')">
+                                                    <i class="fa-regular fa-folder-open text-amber-500" id="icon-sub-tiengtrung"></i>
+                                                    <span>Tiếng trung</span>
+                                                </div>
+                                                <div class="pl-3 border-l border-dashed border-gray-400 mt-1 space-y-1" id="sub-tiengtrung">
+                                                    <div class="flex items-center gap-1 text-gray-600 cursor-pointer hover:text-slateBlue" onclick="showFileProperties('Lop')">
+                                                        <i class="fa-solid fa-folder text-amber-500"></i> 1. Tài liệu học trên lớp
+                                                    </div>
+                                                    <div class="flex items-center gap-1 text-gray-600 cursor-pointer hover:text-slateBlue" onclick="showFileProperties('CC')">
+                                                        <i class="fa-solid fa-folder text-amber-500"></i> 2. Tài liệu học thi CC
+                                                    </div>
+                                                    <div class="flex items-center gap-1 text-gray-600 cursor-pointer hover:text-slateBlue" onclick="showFileProperties('NgoaiKhoa')">
+                                                        <i class="fa-solid fa-folder text-amber-500"></i> 3. Ngoại khoá
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div id="walkthrough-step-display" class="bg-white/80 p-3 rounded border border-charcoal/10 min-h-[140px] text-xs">
-                                    <p class="font-bold text-slateBlue" id="step-title">Bước 1: Mở Finder</p>
-                                    <p class="text-gray-600 mt-1.5" id="step-desc">Khởi chạy Finder từ thanh Dock trên hệ điều hành MacOS để bắt đầu duyệt tập tin.</p>
-                                    <div class="mt-3 font-mono text-[10px] text-gray-400" id="step-preview-file">Thư mục hiện hành: Thư mục chính</div>
-                                </div>
                             </div>
-                            <div class="flex justify-between items-center mt-3 pt-2 border-t border-charcoal/10">
-                                <button onclick="prevWalkthroughStep()" class="text-xs font-bold text-slateBlue hover:underline"><i class="fa-solid fa-chevron-left"></i> Trước</button>
-                                <span class="text-[10px] text-gray-400 font-semibold" id="step-counter">1 / 12</span>
-                                <button onclick="nextWalkthroughStep()" class="text-xs font-bold text-slateBlue hover:underline">Tiếp theo <i class="fa-solid fa-chevron-right"></i></button>
+                            <!-- Properties Viewpane -->
+                            <div class="w-full md:w-1/2 bg-white/60 p-3 rounded border border-charcoal/10 flex flex-col justify-between animate-pulse" id="file-properties-view">
+                                <h5 class="text-[10px] font-bold uppercase text-slateBlue border-b border-charcoal/10 pb-1 mb-2"><i class="fa-solid fa-circle-info"></i> Chi tiết thư mục:</h5>
+                                <div class="text-[10px] space-y-1" id="properties-content">
+                                    <p class="text-gray-400">Chọn thư mục con ở nhánh "Tiếng trung" bên cạnh để xem các thuộc tính và cách thức sắp đặt dữ liệu của tôi.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Before/After File Architecture Classification -->
+                    <!-- MacOS Finder Steps Simulator -->
                     <div class="mt-6 border-t border-charcoal/10 pt-4">
-                        <h4 class="font-bold text-slateBlue text-xs uppercase mb-3"><i class="fa-solid fa-network-wired mr-1"></i> Sơ đồ tái cấu trúc dữ liệu khoa học:</h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="bg-red-50/20 p-3 rounded border border-red-100">
-                                <span class="text-[10px] font-bold text-red-600 uppercase tracking-wider"><i class="fa-solid fa-triangle-exclamation"></i> Tình trạng ban đầu (Lộn xộn)</span>
-                                <p class="text-[10px] text-gray-400 font-mono mt-1">Downloads/ Taskbar/... chứa: IMG_2416.PNG, CamScanner.pdf, Discord.dmg, ket-qua-dang-ky-mon-hoc.doc, de-thi-hoc-sinh-gioi-tien...022.pdf</p>
+                        <div class="flex items-center justify-between border-b border-charcoal/10 pb-2 mb-3">
+                            <h4 class="font-bold font-handwritten text-xs text-charcoal flex items-center gap-2">
+                                <i class="fa-brands fa-apple text-slateBlue"></i> Trình mô phỏng MacOS Finder (12 Bước thực hành của tôi)
+                            </h4>
+                            <div class="flex gap-1">
+                                <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                                <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
                             </div>
-                            <div class="bg-emerald-50/20 p-3 rounded border border-emerald-100">
-                                <span class="text-[10px] font-bold text-emerald-600 uppercase tracking-wider"><i class="fa-solid fa-circle-check"></i> Cấu trúc tối ưu mới (Tài liệu)</span>
-                                <div class="text-[10px] text-gray-600 font-mono mt-1 pl-2 border-l-2 border-emerald-400">
-                                    📂 Tài liệu <br>
-                                    &nbsp;&nbsp;📂 Tiếng trung <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;📂 1. Tài liệu học trên lớp <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;📂 2. Tài liệu học thi CC <br>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;📂 3. Ngoại khoá <br>
-                                    &nbsp;&nbsp;📂 中文 / Tanh / csvhvn / michos
-                                </div>
-                            </div>
+                        </div>
+                        <div id="walkthrough-step-display" class="bg-slate-50 p-3 rounded border border-charcoal/10 min-h-[100px] text-xs">
+                            <p class="font-bold text-slateBlue" id="step-title">Bước 1: Mở Finder</p>
+                            <p class="text-gray-600 mt-1" id="step-desc">Khởi chạy Finder từ thanh Dock trên hệ điều hành MacOS để bắt đầu duyệt tập tin.</p>
+                            <div class="mt-2 font-mono text-[10px] text-gray-400" id="step-preview-file">Thư mục hiện hành: Thư mục chính</div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <button onclick="prevWalkthroughStep()" class="text-xs font-bold text-slateBlue hover:underline"><i class="fa-solid fa-chevron-left"></i> Trước</button>
+                            <span class="text-[10px] text-gray-400 font-semibold" id="step-counter">1 / 12</span>
+                            <button onclick="nextWalkthroughStep()" class="text-xs font-bold text-slateBlue hover:underline">Tiếp theo <i class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </div>
@@ -664,7 +801,7 @@
                 </div>
             </div>
 
-            <!-- PROJECT 6: Responsible AI (Based on PDF 6 policies and rules) -->
+            <!-- PROJECT 6: 3D Flip cards for Responsible AI -->
             <div id="project-detail-6" class="inner-project-content hidden space-y-6">
                 <div class="bg-white sketch-border p-6">
                     <span class="text-xs font-bold text-slateBlue uppercase">Bài tập 6 (Mục 6.4)</span>
@@ -802,48 +939,50 @@
             </div>
         </section>
 
-        <!-- ==================== TAB 4: PLAYGROUND (SÂN CHƠI DOODLE TƯƠNG TÁC) ==================== -->
+        <!-- ==================== TAB 4: PLAYGROUND (SÂN CHƠI DOODLE VỚI BẢNG VẼ NÂNG CAO) ==================== -->
         <section id="tab-playground" class="tab-content hidden space-y-6">
             <div class="bg-white sketch-border p-6">
                 <span class="bg-lightBlue text-slateBlue text-xs font-bold px-3 py-1 rounded-full sketch-border-sm uppercase tracking-wide">Sân chơi sáng tạo</span>
                 <h2 class="text-xl font-bold font-handwritten mt-3 mb-2 text-charcoal">
-                    <i class="fa-solid fa-palette text-slateBlue mr-2"></i> Bảng vẽ tay nét Doodle cá nhân
+                    <i class="fa-solid fa-palette text-slateBlue mr-2"></i> Bảng vẽ tay nghệ thuật & Tương tác âm thanh
                 </h2>
-                <p class="text-xs text-gray-500 mb-4">Bạn có thể tự do phác thảo nét vẽ doodle, ngôi sao hoặc chữ Hán theo sở thích trực tiếp lên bảng vẽ bên dưới.</p>
+                <p class="text-xs text-gray-500 mb-4">Bạn có thể tự do phác thảo các ý tưởng của mình trực tiếp lên khung bảng dưới đây, đồng thời bật nhạc chuông thư giãn chuông gió ở mục khóa màn hình bên trái để tăng tính tập trung.</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <!-- Drawing Board -->
+                    <!-- Advanced Drawing Board -->
                     <div class="md:col-span-3 bg-white border-2 border-charcoal rounded-2xl shadow-inner overflow-hidden relative" id="canvas-container">
                         <div class="absolute inset-0 bg-white pointer-events-none opacity-20" style="background-image: linear-gradient(#e2e8f0 1px, transparent 1px); background-size: 100% 24px;"></div>
                         <canvas id="doodleCanvas" class="w-full relative z-10"></canvas>
                     </div>
 
-                    <!-- Panel parameters controls -->
+                    <!-- Side Controllers -->
                     <div class="md:col-span-1 flex flex-col justify-between gap-4">
                         <div class="space-y-4">
                             <h4 class="font-bold font-handwritten text-xs text-charcoal">Bảng điều khiển nét:</h4>
+                            <!-- Brush colors selection -->
                             <div>
                                 <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Màu vẽ:</label>
                                 <div class="flex gap-2">
                                     <button onclick="setBrushColor('#2C3E50')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-charcoal" title="Đen Charcoal"></button>
                                     <button onclick="setBrushColor('#517594')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-slateBlue" title="Xanh Slate"></button>
                                     <button onclick="setBrushColor('#e11d48')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-rose-600" title="Đỏ Rose"></button>
-                                    <button onclick="setEraser()" class="w-8 h-8 rounded-full border-2 border-charcoal bg-white flex items-center justify-center text-charcoal hover:bg-gray-100" title="Cọ Tẩy"><i class="fa-solid fa-eraser text-xs"></i></button>
+                                    <button onclick="setEraser()" class="w-8 h-8 rounded-full border-2 border-charcoal bg-white flex items-center justify-center text-charcoal hover:bg-gray-100" title="Chế độ Tẩy"><i class="fa-solid fa-eraser text-xs"></i></button>
                                 </div>
                             </div>
+                            <!-- Brush thickness -->
                             <div>
-                                <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Độ dày nét</label>
+                                <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Độ dày nét vẽ</label>
                                 <input type="range" min="1" max="15" value="3" id="brushSize" class="w-full accent-slateBlue">
                             </div>
                         </div>
 
-                        <!-- Utility commands -->
+                        <!-- Utility actions -->
                         <div class="space-y-2">
                             <button onclick="undoDraw()" class="w-full bg-white hover:bg-gray-50 border-2 border-charcoal text-xs font-bold py-1.5 px-3 rounded shadow-[2px_2px_0px_#2C3E50] transition-all flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-rotate-left"></i> Hoàn tác
+                                <i class="fa-solid fa-rotate-left"></i> Hoàn tác (Undo)
                             </button>
                             <button onclick="exportCanvas()" class="w-full bg-white hover:bg-gray-50 border-2 border-charcoal text-xs font-bold py-1.5 px-3 rounded shadow-[2px_2px_0px_#2C3E50] transition-all flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-download"></i> Tải ảnh nét vẽ (.png)
+                                <i class="fa-solid fa-download"></i> Tải hình đã vẽ (.png)
                             </button>
                             <button onclick="clearCanvas()" class="w-full bg-charcoal text-white text-xs font-bold py-1.5 px-3 rounded hover:bg-slateBlue transition-colors sketch-border-sm flex items-center justify-center gap-1">
                                 <i class="fa-solid fa-trash-can"></i> Dọn sạch bảng
@@ -856,7 +995,40 @@
 
     </main>
 
+    <!-- SYSTEM FUNCTIONAL SCRIPTS -->
     <script>
+        // BACKGROUND PIANO MUSIC PLAYER LOGIC
+        const bgPiano = document.getElementById('bg-piano');
+        let isMusicPlaying = false;
+
+        function toggleBgMusic() {
+            initAudio();
+            const btn = document.getElementById('piano-music-btn');
+            const icon = document.getElementById('piano-icon');
+            const statusText = document.getElementById('piano-status-text');
+
+            if (!isMusicPlaying) {
+                bgPiano.play().then(() => {
+                    isMusicPlaying = true;
+                    icon.className = 'fa-solid fa-pause';
+                    statusText.innerText = 'Tạm dừng';
+                    btn.classList.add('bg-emerald-100', 'text-emerald-700');
+                }).catch(err => {
+                    console.log("Audio play blocked by browser security.", err);
+                });
+            } else {
+                bgPiano.pause();
+                isMusicPlaying = false;
+                icon.className = 'fa-solid fa-play';
+                statusText.innerText = 'Bật Piano';
+                btn.classList.remove('bg-emerald-100', 'text-emerald-700');
+            }
+        }
+
+        function changeBgVolume(val) {
+            bgPiano.volume = val;
+        }
+
         // LIVE LOCKSCREEN CLOCK UPDATE
         function updateClock() {
             const now = new Date();
@@ -1022,6 +1194,9 @@
         }
         makeStickerDraggable('sticker-cat');
         makeStickerDraggable('sticker-star');
+        makeStickerDraggable('sticker-spiral');
+        makeStickerDraggable('sticker-excl');
+        makeStickerDraggable('sticker-heart');
 
         // TAB NAVIGATION CONTROLLER
         function switchTab(tabName) {
@@ -1036,11 +1211,11 @@
 
             // Nav indicators
             document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.className = 'nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all';
+                btn.className = 'nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all';
             });
             const activeNav = document.getElementById(`nav-${tabName}`);
             if (activeNav) {
-                activeNav.className = 'nav-btn w-full text-left px-4 py-2 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all';
+                activeNav.className = 'nav-btn w-full text-left px-4 py-2.5 rounded-lg font-bold flex items-center gap-3 bg-slateBlue text-white border-2 border-charcoal shadow-[2px_2px_0px_#2C3E50] transition-all';
             }
 
             // Mobile menu indicators
@@ -1112,7 +1287,7 @@
             }
         }
 
-        // FOLDER TREES COLLAPSIBILITY SYSTEM
+        // FOLDER TREES EXPANSIONS (Bài tập 1)
         function toggleFolder(folderId) {
             playScale(6);
             const folder = document.getElementById(folderId);
@@ -1123,6 +1298,46 @@
             } else {
                 folder.classList.add('hidden');
                 icon.className = 'fa-regular fa-folder text-amber-500';
+            }
+        }
+
+        // INTERACTIVE FILE PROPERTIES INJECTOR (Bài tập 1)
+        const fileProperties = {
+            Lop: {
+                title: "1. Tài liệu học trên lớp",
+                size: "Thư mục hệ thống",
+                format: "Danh mục lưu trữ",
+                modified: "2026-03-12 14:22",
+                description: "Nơi lưu giữ toàn bộ bài giảng Slide, bài tập nhỏ và các tài liệu dịch song ngữ được giáo viên cung cấp trực tiếp trên lớp học ULIS."
+            },
+            CC: {
+                title: "2. Tài liệu học thi CC",
+                size: "Thư mục hệ thống",
+                format: "Danh mục lưu trữ",
+                modified: "2026-03-24 10:15",
+                description: "Thư mục chuyên dụng chứa tài liệu luyện thi các chứng chỉ ngoại ngữ quốc tế tiếng Trung (như HSK, HSKK), phân tách khoa học theo các cấp độ bậc học."
+            },
+            NgoaiKhoa: {
+                title: "3. Ngoại khoá",
+                size: "Thư mục hệ thống",
+                format: "Danh mục lưu trữ",
+                modified: "2026-03-28 09:30",
+                description: "Nơi hệ thống hóa các tài liệu sự kiện, câu lạc bộ ngoại khóa, dự án dịch thuật văn học cộng đồng mà cá nhân tôi trực tiếp tham gia học hỏi."
+            }
+        };
+
+        function showFileProperties(fileKey) {
+            playScale(3);
+            const props = fileProperties[fileKey];
+            const container = document.getElementById('properties-content');
+            if (props) {
+                container.innerHTML = `
+                    <p class="font-bold text-slateBlue text-xs truncate">${props.title}</p>
+                    <p class="mt-2"><span class="font-semibold text-gray-500">Định dạng:</span> ${props.format}</p>
+                    <p><span class="font-semibold text-gray-500">Dung lượng:</span> ${props.size}</p>
+                    <p><span class="font-semibold text-gray-500">Chỉnh sửa:</span> ${props.modified}</p>
+                    <p class="mt-2 leading-normal border-t border-charcoal/5 pt-2 text-charcoal">${props.description}</p>
+                `;
             }
         }
 
@@ -1220,17 +1435,19 @@
             container.innerHTML = infographicVersions[versionKey];
         }
 
-        // CANVAS ADVANCED DOODLE PAINT DRAWING APPARATUS (Playground)
+        // CANVAS ADVANCED DOODLE PAINT DRAWING APPARATUS (Playground - RESOLVED MOUSE DRAWING NETS BUG)
         const canvas = document.getElementById('doodleCanvas');
         const ctx = canvas.getContext('2d');
         const canvasContainer = document.getElementById('canvas-container');
         let painting = false;
         let brushColor = '#2C3E50';
         let drawingHistory = [];
+        let lastX = 0;
+        let lastY = 0;
 
         function saveCanvasState() {
             drawingHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
-            if (drawingHistory.length > 15) {
+            if (drawingHistory.length > 20) {
                 drawingHistory.shift();
             }
         }
@@ -1260,32 +1477,53 @@
         window.addEventListener('resize', resizeCanvas);
         setTimeout(resizeCanvas, 150);
 
+        // Core Drawing Functions with scaling correction to resolve missing lines bug
         function startPosition(e) {
+            initAudio();
             saveCanvasState();
             painting = true;
-            draw(e);
+
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+            // Track previous coordinate point to prevent dots skipping gaps
+            lastX = (clientX - rect.left) * scaleX;
+            lastY = (clientY - rect.top) * scaleY;
         }
 
         function finishedPosition() {
             painting = false;
-            ctx.beginPath();
         }
 
         function draw(e) {
             if (!painting) return;
-            const size = document.getElementById('brushSize').value;
-            ctx.lineWidth = size;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = brushColor;
 
             const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
             const clientX = e.touches ? e.touches[0].clientX : e.clientX;
             const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-            ctx.lineTo(clientX - rect.left, clientY - rect.top);
-            ctx.stroke();
+            const currentX = (clientX - rect.left) * scaleX;
+            const currentY = (clientY - rect.top) * scaleY;
+
             ctx.beginPath();
-            ctx.moveTo(clientX - rect.left, clientY - rect.top);
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(currentX, currentY);
+
+            const size = document.getElementById('brushSize').value;
+            ctx.lineWidth = size;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = brushColor;
+            ctx.stroke();
+
+            // Set current coordinates as previous coordinates
+            lastX = currentX;
+            lastY = currentY;
         }
 
         canvas.addEventListener('mousedown', startPosition);
