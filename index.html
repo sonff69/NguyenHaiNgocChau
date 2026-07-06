@@ -101,9 +101,6 @@
         .flip-card-back {
             transform: rotateY(180deg);
         }
-        #doodleCanvas {
-            touch-action: none; /* Prevents screen scrolling while drawing on mobile */
-        }
     </style>
 </head>
 <body class="grid-bg font-sans text-charcoal min-h-screen flex flex-col md:flex-row overflow-x-hidden relative select-none">
@@ -248,9 +245,6 @@
                 </button>
                 <button onclick="switchTab('reflection')" id="nav-reflection" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
                     <i class="fa-solid fa-star"></i> Tổng kết & Đánh giá
-                </button>
-                <button onclick="switchTab('playground')" id="nav-playground" class="nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all">
-                    <i class="fa-solid fa-palette"></i> Sân chơi Doodle
                 </button>
             </div>
         </header>
@@ -499,7 +493,7 @@
                     
                     <div class="space-y-4 mt-4">
                         <p class="text-xs text-gray-600">
-                            Trong quá trình thực tế học tập, việc viết câu lệnh (Prompt) chất lượng cao quyết định độ tối ưu dữ liệu đầu ra của mô hình ngôn ngữ lớn. Dưới đây là 3 tác vụ học tập điển hình mà tôi đã xây dựng cấu trúc để đối sánh kết quả phản hồi:
+                            Trong quá trình thực tế học tập, việc viết câu lệnh (Prompt) quyết định độ tối ưu dữ liệu đầu ra của mô hình ngôn ngữ lớn. Dưới đây là 3 tác vụ học tập điển hình mà tôi đã xây dựng cấu trúc để đối sánh kết quả phản hồi:
                         </p>
 
                         <!-- Sub-Selector for her 3 actual tasks -->
@@ -586,43 +580,87 @@
                 </div>
             </div>
 
-            <!-- PROJECT 4: Online Collaboration (Based on PDF 4) -->
+            <!-- PROJECT 4: Online Collaboration (Based on PDF 4 - EXPANDED INTERACTIVE WORKFLOW) -->
             <div id="project-detail-4" class="inner-project-content hidden space-y-6">
                 <div class="bg-white sketch-border p-6">
                     <span class="text-xs font-bold text-slateBlue uppercase">Bài tập 4 (Mục 4.4)</span>
                     <h3 class="text-lg font-bold font-handwritten text-charcoal mt-1">Cộng tác nhóm số hóa & Quản trị quy trình học tập nhóm</h3>
                     
                     <div class="space-y-4 mt-4">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="space-y-3">
-                                <h4 class="font-bold text-slateBlue text-xs uppercase"><i class="fa-solid fa-users-gear mr-1"></i> Các công cụ cộng tác trực tuyến nhóm:</h4>
-                                <ul class="text-xs text-gray-600 space-y-2 pl-2">
-                                    <li><i class="fa-solid fa-message text-indigo-500"></i> <strong>Zalo:</strong> Phương tiện giao tiếp cốt lõi, lập nhóm trực tuyến để phân chia nhiệm vụ chi tiết và cập nhật các mốc thời gian (Deadline).</li>
-                                    <li><i class="fa-solid fa-video text-red-500"></i> <strong>Google Meet:</strong> Không gian họp trực tuyến, thuyết trình thảo luận đưa ra các ý tưởng giải pháp và thu thập phản hồi.</li>
-                                    <li><i class="fa-solid fa-file-lines text-blue-500"></i> <strong>Google Docs:</strong> Soạn thảo cộng tác, hỗ trợ hiệu đính, biên tập bài luận song hành theo thời gian thực.</li>
-                                    <li><i class="fa-solid fa-hard-drive text-emerald-500"></i> <strong>Google Drive:</strong> Lưu trữ phân cấp thư mục nhóm tập trung để thu gom, tổng hợp toàn bộ bài làm của thành viên.</li>
-                                </ul>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Trong hoạt động dịch thuật và nghiên cứu học thuật liên ngành, sự liên kết chặt chẽ qua môi trường điện toán đám mây là chìa khóa then chốt giúp tối ưu hóa tiến độ hoàn thành.
+                        </p>
+
+                        <!-- Expanded Collaboration Suite Dashboard -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-50 p-5 sketch-border-sm">
+                            <!-- Left: Detailed Mock Zalo chat & Workspace -->
+                            <div class="lg:col-span-5 bg-white p-4 rounded-xl border border-charcoal/20 shadow-sm flex flex-col justify-between h-[380px]">
+                                <div>
+                                    <div class="flex items-center gap-2 border-b border-charcoal/10 pb-2 mb-3">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                                        <h5 class="text-xs font-bold text-charcoal flex items-center gap-1"><i class="fa-solid fa-comments"></i> Nhật ký nhóm Zalo (Phân công nhiệm vụ)</h5>
+                                    </div>
+                                    <div class="space-y-3 h-64 overflow-y-auto text-[10px] pr-1">
+                                        <div class="bg-gray-100 p-2 rounded-lg">
+                                            <p class="font-bold text-slateBlue">Nguyễn Hải Ngọc Châu (Trưởng nhóm):</p>
+                                            <p class="text-gray-600 mt-0.5">Chào cả nhà, đề tài nhóm mình thống nhất chọn là "Sử dụng AI để tự học tiếng Trung hiệu quả" nhé. Mình sẽ chịu trách nhiệm phân tích logic và tổng hợp Infographic bản cuối trên Canva.</p>
+                                        </div>
+                                        <div class="bg-blue-50 p-2 rounded-lg text-right">
+                                            <p class="font-bold text-charcoal">Thành viên B:</p>
+                                            <p class="text-gray-600 mt-0.5">Vâng Châu, mình sẽ phụ trách biên tập dữ liệu học thuật và phân tích chi tiết ưu/nhược điểm của 6 ứng dụng tiếng Trung nhé.</p>
+                                        </div>
+                                        <div class="bg-green-50 p-2 rounded-lg">
+                                            <p class="font-bold text-emerald-700">Thành viên C:</p>
+                                            <p class="text-gray-600 mt-0.5">Còn mình lo phần viết Prompt mẫu bằng tiếng Anh cho Gemini để tạo hình minh họa phong cách Flat-design rực rỡ nhé.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-[9px] text-gray-400 italic text-center pt-2 border-t border-charcoal/5">Nhật ký thảo luận và phân vai tiến trình nhóm</p>
                             </div>
 
-                            <!-- Interactive Team Workflow Simulator -->
-                            <div class="bg-sand p-4 sketch-border-sm flex flex-col justify-between">
-                                <h4 class="font-bold font-handwritten text-xs text-charcoal mb-2"><i class="fa-solid fa-route text-slateBlue"></i> Sơ đồ quy trình hợp tác nhóm thực tế:</h4>
-                                <div class="space-y-2">
-                                    <div class="flex items-center gap-3 bg-white p-2 border border-charcoal/10 rounded cursor-pointer hover:border-slateBlue" onclick="highlightWorkflow(1)">
-                                        <span class="w-5 h-5 rounded-full bg-slateBlue text-white text-[10px] font-bold flex items-center justify-center">1</span>
-                                        <p class="text-[11px] font-semibold text-charcoal">Phân công nhiệm vụ cụ thể qua Zalo</p>
+                            <!-- Right: Detailed App Comparison & Workflow Timeline (Based on PDF 5 App evaluation) -->
+                            <div class="lg:col-span-7 flex flex-col justify-between h-[380px] space-y-4">
+                                <!-- App evaluation interactive drawer -->
+                                <div class="bg-white p-4 rounded-xl border border-charcoal/20 shadow-sm flex-1">
+                                    <h5 class="text-xs font-bold text-slateBlue mb-2 border-b border-charcoal/10 pb-1 flex items-center gap-1">
+                                        <i class="fa-solid fa-list-check"></i> Khảo sát lý thuyết nhóm: Đánh giá 6 công cụ tự học (Nhấp chọn)
+                                    </h5>
+                                    <div class="grid grid-cols-3 gap-1.5" id="app-selectors">
+                                        <button onclick="showAppDetails('hello')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 bg-slateBlue text-white">Hello Chinese</button>
+                                        <button onclick="showAppDetails('duo')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50">Duolingo</button>
+                                        <button onclick="showAppDetails('super')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50">Super Chinese</button>
+                                        <button onclick="showAppDetails('anki')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50">Anki</button>
+                                        <button onclick="showAppDetails('pleco')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50">Pleco</button>
+                                        <button onclick="showAppDetails('lingq')" class="app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50">LingQ</button>
                                     </div>
-                                    <div class="flex items-center gap-3 bg-white p-2 border border-charcoal/10 rounded cursor-pointer hover:border-slateBlue" onclick="highlightWorkflow(2)">
-                                        <span class="w-5 h-5 rounded-full bg-slateBlue text-white text-[10px] font-bold flex items-center justify-center">2</span>
-                                        <p class="text-[11px] font-semibold text-charcoal">Họp thảo luận đưa ra ý tưởng (Google Meet)</p>
+                                    <div id="app-details-pane" class="mt-3 p-3 bg-sand rounded border border-charcoal/10 text-[10px] leading-relaxed h-32 overflow-y-auto">
+                                        <p class="font-bold text-slateBlue">Hello Chinese (Chọn ở trên để chuyển đổi)</p>
+                                        <p class="text-gray-600 mt-1"><strong>Ưu điểm:</strong> Thiết kế bài giảng chuyên biệt hóa cho tiếng Trung, hỗ trợ tập viết nét chữ Hán và nhận diện phát âm chuẩn xác.</p>
+                                        <p class="text-gray-600"><strong>Hạn chế:</strong> Nội dung bài học trình độ nâng cao còn khá hạn chế.</p>
+                                        <p class="text-gray-600"><strong>Phù hợp:</strong> Sinh viên trình độ mới bắt đầu nhập môn.</p>
                                     </div>
-                                    <div class="flex items-center gap-3 bg-white p-2 border border-charcoal/10 rounded cursor-pointer hover:border-slateBlue" onclick="highlightWorkflow(3)">
-                                        <span class="w-5 h-5 rounded-full bg-slateBlue text-white text-[10px] font-bold flex items-center justify-center">3</span>
-                                        <p class="text-[11px] font-semibold text-charcoal">Cùng soạn thảo, hiệu đính nội dung (Google Docs)</p>
-                                    </div>
-                                    <div class="flex items-center gap-3 bg-white p-2 border border-charcoal/10 rounded cursor-pointer hover:border-slateBlue" onclick="highlightWorkflow(4)">
-                                        <span class="w-5 h-5 rounded-full bg-slateBlue text-white text-[10px] font-bold flex items-center justify-center">4</span>
-                                        <p class="text-[11px] font-semibold text-charcoal">Nộp bài tập, tổng hợp dữ liệu (Google Drive)</p>
+                                </div>
+
+                                <!-- Workflow checklist with progress chimes -->
+                                <div class="bg-white p-3 rounded-xl border border-charcoal/20 shadow-sm">
+                                    <h5 class="text-xs font-bold text-charcoal mb-2 flex items-center gap-1"><i class="fa-solid fa-route"></i> Tiến trình kiểm soát mốc Deadline trực quan:</h5>
+                                    <div class="grid grid-cols-2 gap-2 text-[10px]">
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" checked disabled class="rounded border-charcoal text-slateBlue focus:ring-slateBlue">
+                                            <span class="line-through text-gray-400">Phân công Zalo</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" checked disabled class="rounded border-charcoal text-slateBlue focus:ring-slateBlue">
+                                            <span class="line-through text-gray-400">Họp ý tưởng Google Meet</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" checked disabled class="rounded border-charcoal text-slateBlue focus:ring-slateBlue">
+                                            <span class="line-through text-gray-400">Soạn thảo Google Docs</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <input type="checkbox" checked disabled class="rounded border-charcoal text-slateBlue focus:ring-slateBlue">
+                                            <span class="line-through text-gray-400">Đồng bộ Google Drive</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -631,40 +669,145 @@
                 </div>
             </div>
 
-            <!-- PROJECT 5: Content Creation with AI (Based on PDF 5 Infographic adjustments) -->
+            <!-- PROJECT 5: Content Creation with AI (Based on PDF 5 Infographic adjustments - EXPANDED DESIGN WORKSHOP) -->
             <div id="project-detail-5" class="inner-project-content hidden space-y-6">
                 <div class="bg-white sketch-border p-6">
                     <span class="text-xs font-bold text-slateBlue uppercase">Bài tập 5 (Mục 5.4)</span>
                     <h3 class="text-lg font-bold font-handwritten text-charcoal mt-1">Đồng hành cùng AI tạo sinh thiết kế ấn phẩm số</h3>
                     
                     <div class="space-y-4 mt-4">
-                        <div class="bg-sand p-4 sketch-border-sm text-xs">
-                            <h4 class="font-bold text-slateBlue mb-1 uppercase text-[10px]">Chủ đề Infographic nhóm:</h4>
-                            <p class="text-charcoal font-semibold text-sm">"Sử dụng AI để tự học tiếng Trung hiệu quả"</p>
-                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Khảo sát chi tiết quy trình ứng dụng AI tạo sinh để đồng hành xây dựng infographic giáo dục. Chúng tôi kết hợp ChatGPT (nội dung lý luận), Gemini (minh họa nghệ thuật), và Canva (tối ưu hóa mỹ thuật).
+                        </p>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <!-- Tool Configuration from PDF 5 -->
-                            <div class="md:col-span-1 space-y-3 bg-white p-4 border border-charcoal/20 rounded-lg">
-                                <h4 class="font-bold text-xs text-slateBlue"><i class="fa-solid fa-screwdriver-wrench"></i> Ma trận công cụ:</h4>
-                                <ul class="text-[11px] text-gray-600 space-y-2">
-                                    <li><strong>1. ChatGPT:</strong> Lên ý tưởng, thu thập gợi ý và cấu trúc bố cục bài làm.</li>
-                                    <li><strong>2. Gemini AI:</strong> Tạo hình họa minh họa bằng các prompt phức tạp phong cách Flat-design sắc nét.</li>
-                                    <li><strong>3. Canva:</strong> Phối màu, điều chỉnh kích cỡ khung và sắp xếp phông chữ thích ứng tốt với sinh viên.</li>
-                                </ul>
+                        <!-- Expanded Design Workshop Sub-Tabs simulator -->
+                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 bg-slate-50 p-5 sketch-border-sm">
+                            <!-- Left: Interactive Design Phase Selector -->
+                            <div class="lg:col-span-3 space-y-2 bg-white p-3 rounded-xl border border-charcoal/20">
+                                <h4 class="font-bold text-[10px] text-gray-400 uppercase">Quy trình thiết kế:</h4>
+                                <button onclick="selectDesignPhase(1)" id="btn-phase-1" class="phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded bg-slateBlue text-white border border-charcoal/20 transition-colors">Bước 1: Sáng tạo nội dung</button>
+                                <button onclick="selectDesignPhase(2)" id="btn-phase-2" class="phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded hover:bg-gray-50 text-charcoal border border-charcoal/20 transition-colors">Bước 2: Tạo ảnh Gemini</button>
+                                <button onclick="selectDesignPhase(3)" id="btn-phase-3" class="phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded hover:bg-gray-50 text-charcoal border border-charcoal/20 transition-colors">Bước 3: Dựng layout Canva</button>
+                                <button onclick="selectDesignPhase(4)" id="btn-phase-4" class="phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded hover:bg-gray-50 text-charcoal border border-charcoal/20 transition-colors">Bước 4: Ma trận đánh giá AI</button>
+                                <button onclick="selectDesignPhase(5)" id="btn-phase-5" class="phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded hover:bg-gray-50 text-charcoal border border-charcoal/20 transition-colors">Bước 5: Ưu & Hạn chế AI</button>
                             </div>
 
-                            <!-- Interactive Image Adjustments Display -->
-                            <div class="md:col-span-2 border-2 border-charcoal p-4 rounded bg-[#e9edf2] flex flex-col justify-between h-72 relative overflow-hidden shadow-inner">
-                                <div class="flex items-center justify-between border-b border-charcoal/10 pb-2 mb-2">
-                                    <span class="text-[10px] font-mono font-semibold text-slateBlue">Căn chỉnh ấn phẩm: Trước & Sau chỉnh sửa</span>
-                                    <div class="flex gap-1.5">
-                                        <button onclick="toggleInfographicView('first')" class="bg-white text-[10px] font-bold px-2 py-0.5 border border-charcoal rounded hover:bg-slateBlue hover:text-white transition-all">Phiên bản đầu</button>
-                                        <button onclick="toggleInfographicView('second')" class="bg-white text-[10px] font-bold px-2 py-0.5 border border-charcoal rounded hover:bg-slateBlue hover:text-white transition-all">Sau chỉnh sửa</button>
+                            <!-- Right: Detailed Phase Showcase container -->
+                            <div class="lg:col-span-9 bg-white border border-charcoal/20 p-4 rounded-xl shadow-inner min-h-[300px] flex flex-col justify-between">
+                                <!-- Phase 1 -->
+                                <div id="phase-content-1" class="phase-pane block space-y-3">
+                                    <h4 class="font-bold text-xs text-slateBlue uppercase">Bước 1: Sáng tạo nội dung khoa học bằng ChatGPT</h4>
+                                    <div class="bg-gray-100 p-2.5 rounded border border-charcoal/10 font-mono text-[9px]">
+                                        <span class="text-indigo-500">Prompt:</span> "Gợi ý các ứng dụng để tự học tiếng Trung. So sánh ưu và nhược điểm của các ứng dụng học tiếng Trung. Từ đó xây dựng lộ trình học tiếng Trung cho người mới bắt đầu..."
+                                    </div>
+                                    <div class="space-y-2 text-[10px]">
+                                        <p class="font-bold text-charcoal"><i class="fa-solid fa-pen-fancy"></i> Các bước chỉnh sửa và tối ưu hóa nội dung đầu ra của tôi:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-600 pl-1">
+                                            <li><strong>Rút gọn:</strong> Cắt giảm độ dài văn bản lý luận thô của AI nhằm tránh tình trạng quá tải chữ trên infographic.</li>
+                                            <li><strong>Bổ sung:</strong> Làm nổi bật thêm 5 lợi ích then chốt của việc tự học tiếng Trung có sự trợ giúp của AI.</li>
+                                            <li><strong>Định hình:</strong> Sắp xếp lộ trình học tập logic theo khung chuẩn bài thi HSK 4 để tăng tính thực tiễn học thuật.</li>
+                                        </ul>
                                     </div>
                                 </div>
-                                <div id="infographic-preview-area" class="flex-1 flex gap-4 items-center justify-center bg-white/80 p-3 rounded text-xs overflow-y-auto">
-                                    <p class="text-gray-400 text-center">Chọn phiên bản chỉnh sửa bên trên để theo dõi tư duy tối ưu hóa mỹ thuật.</p>
+
+                                <!-- Phase 2 -->
+                                <div id="phase-content-2" class="phase-pane hidden space-y-3">
+                                    <h4 class="font-bold text-xs text-slateBlue uppercase">Bước 2: Kết xuất hình ảnh mỹ thuật bằng Gemini AI</h4>
+                                    <div class="bg-gray-100 p-2.5 rounded border border-charcoal/10 font-mono text-[9px] leading-relaxed">
+                                        <span class="text-indigo-500">Prompt minh họa:</span> "Create a modern illustration of a university student learning Chinese with AI assistant, laptop screen showing Chinese characters, futuristic educational technology, flat design, infographic style, bright colors."
+                                    </div>
+                                    <div class="space-y-2 text-[10px]">
+                                        <p class="font-bold text-charcoal"><i class="fa-solid fa-crop-simple"></i> Cách thức tinh chỉnh hình ảnh đầu ra của tôi:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-600 pl-1">
+                                            <li><strong>Bố cục:</strong> Chỉ ưu tiên chọn lọc hình minh họa phẳng, cấu trúc gọn và đơn giản để đồng bộ tốt với Canva.</li>
+                                            <li><strong>Tinh gọn:</strong> Cắt bỏ hoàn toàn các chi tiết rườm rà thừa thãi do mô hình tự động sinh ra.</li>
+                                            <li><strong>Kích thước:</strong> Co giãn và chuyển tỷ lệ ảnh vuông về kích cỡ hợp lý, chuẩn hóa kích thước ăn khớp khung chứa Canva.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Phase 3 -->
+                                <div id="phase-content-3" class="phase-pane hidden space-y-3">
+                                    <h4 class="font-bold text-xs text-slateBlue uppercase">Bước 3: Dựng layout và phối màu trên Canva</h4>
+                                    <div class="space-y-3 text-[10px]">
+                                        <div class="bg-blue-50/50 p-3 border border-blue-200 rounded">
+                                            <h5 class="font-bold text-blue-700">Prompt dựng Infographic:</h5>
+                                            <p class="text-[9px] text-gray-500 italic mt-0.5">"Hãy thiết kế một infographic giáo dục với chủ đề 'Sử dụng AI để tự học tiếng Trung hiệu quả'. Infographic cần trình bày các nội dung chính gồm: lợi ích của AI trong học tiếng Trung, các công cụ AI hỗ trợ học tập bao gồm Hello Chinese..."</p>
+                                        </div>
+                                        <p class="font-bold text-charcoal"><i class="fa-solid fa-palette"></i> Căn chỉnh mỹ thuật nâng cao của tôi:</p>
+                                        <ul class="list-disc list-inside space-y-1 text-gray-600 pl-1">
+                                            <li><strong>Bảng màu:</strong> Thay thế màu sắc rực rỡ ban đầu của AI sang tông Xanh dương & Trắng chủ đạo thanh lịch, mang cảm hứng công nghệ hiện đại.</li>
+                                            <li><strong>Tích hợp:</strong> Chèn khéo léo các hình ảnh minh họa Flat-design xuất từ Gemini AI vào từng phân vùng thông tin.</li>
+                                            <li><strong>Phông chữ:</strong> Thay đổi sang kiểu chữ tối giản, thân thiện, điều chỉnh kích cỡ chữ lớn nhỏ linh hoạt để thu hút đối tượng người học là sinh viên.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Phase 4 -->
+                                <div id="phase-content-4" class="phase-pane hidden space-y-2">
+                                    <h4 class="font-bold text-xs text-slateBlue uppercase">Bước 4: Ma trận so sánh năng lực 3 công cụ AI (Tác giả tự lập)</h4>
+                                    <div class="overflow-x-auto max-h-48 overflow-y-auto">
+                                        <table class="w-full text-[9px] text-left text-gray-600 border-collapse border border-charcoal/20">
+                                            <thead>
+                                                <tr class="bg-lightBlue text-charcoal font-bold uppercase border-b border-charcoal">
+                                                    <th class="p-2 border border-charcoal/10">Tiêu chí so sánh</th>
+                                                    <th class="p-2 border border-charcoal/10 text-center">ChatGPT</th>
+                                                    <th class="p-2 border border-charcoal/10 text-center">Gemini</th>
+                                                    <th class="p-2 border border-charcoal/10 text-center">Canva AI</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="hover:bg-slate-50">
+                                                    <td class="p-1.5 font-bold border border-charcoal/10">Tạo nội dung văn bản</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Rất tốt</td>
+                                                    <td class="p-1.5 text-center text-blue-600 font-bold border border-charcoal/10">Khá tốt</td>
+                                                    <td class="p-1.5 text-center text-amber-600 font-bold border border-charcoal/10">Trung bình</td>
+                                                </tr>
+                                                <tr class="hover:bg-slate-50">
+                                                    <td class="p-1.5 font-bold border border-charcoal/10">Tạo hình ảnh minh họa</td>
+                                                    <td class="p-1.5 text-center text-red-600 font-bold border border-charcoal/10">Hạn chế</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Rất tốt</td>
+                                                    <td class="p-1.5 text-center text-blue-600 font-bold border border-charcoal/10">Tốt</td>
+                                                </tr>
+                                                <tr class="hover:bg-slate-50">
+                                                    <td class="p-1.5 font-bold border border-charcoal/10">Thiết kế trực quan layout</td>
+                                                    <td class="p-1.5 text-center text-red-600 font-bold border border-charcoal/10">Hạn chế</td>
+                                                    <td class="p-1.5 text-center text-amber-600 font-bold border border-charcoal/10">Trung bình</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Rất tốt</td>
+                                                </tr>
+                                                <tr class="hover:bg-slate-50">
+                                                    <td class="p-1.5 font-bold border border-charcoal/10">Độ dễ dàng thao tác sử dụng</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Rất dễ</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Dễ</td>
+                                                    <td class="p-1.5 text-center text-emerald-600 font-bold border border-charcoal/10">Rất dễ</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Phase 5 -->
+                                <div id="phase-content-5" class="phase-pane hidden space-y-3">
+                                    <h4 class="font-bold text-xs text-slateBlue uppercase">Bước 5: Phân tích vai trò thực tế của AI trong quá trình sáng tạo</h4>
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[10px] h-40 overflow-y-auto pr-1">
+                                        <div class="bg-emerald-50/50 p-2.5 rounded border border-emerald-200">
+                                            <h5 class="font-bold text-emerald-700 uppercase text-[9px]"><i class="fa-solid fa-circle-plus"></i> Những phần AI hỗ trợ vượt trội (Ưu điểm):</h5>
+                                            <ul class="list-disc list-inside mt-1.5 space-y-1 text-gray-600">
+                                                <li>Giúp xây dựng, nạp kho ý tưởng và cảm hứng ban đầu cực kỳ nhanh chóng.</li>
+                                                <li>Hỗ trợ sắp đặt, tổ chức viết nội dung có phân cấp cấu trúc vững vàng.</li>
+                                                <li>Sinh ảnh phác họa minh họa đẹp, sắc nét và bám sát tốt chủ đề đề tài.</li>
+                                                <li>Cắt giảm tối đa thời gian thiết kế thô ban đầu để tập trung hiệu đính chiều sâu.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="bg-red-50/50 p-2.5 rounded border border-red-200">
+                                            <h5 class="font-bold text-red-700 uppercase text-[9px]"><i class="fa-solid fa-circle-minus"></i> Những hạn chế của AI tạo sinh (Nhược điểm):</h5>
+                                            <ul class="list-disc list-inside mt-1.5 space-y-1 text-gray-600">
+                                                <li>Một số mốc thông tin dữ liệu do AI đưa ra còn thiếu chính xác (ảo giác).</li>
+                                                <li>Hình họa minh họa đôi khi bị lỗi chi tiết không đúng kỳ vọng thực tế.</li>
+                                                <li>Văn phong đầu ra dễ bị chung chung, rập khuôn hay lạc đề nếu câu lệnh prompt chưa đạt độ chuyên sâu nhất định.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -804,61 +947,6 @@
                                 <li>Mất nhiều thời gian ở giai đoạn đầu để sắp đặt cấu trúc, dọn dẹp khối lượng lớn tệp tin cũ tích tụ qua các kỳ học trước.</li>
                                 <li>Vấp phải trở ngại trong việc rèn luyện thói quen đặt tên file đồng bộ, nhất quán trong những ngày đầu tiên thích ứng.</li>
                             </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==================== TAB 4: PLAYGROUND (SÂN CHƠI DOODLE VỚI BẢNG VẼ NÂNG CAO) ==================== -->
-        <section id="tab-playground" class="tab-content hidden space-y-6">
-            <div class="bg-white sketch-border p-6 relative">
-                <span class="bg-lightBlue text-slateBlue text-xs font-bold px-3 py-1 rounded-full sketch-border-sm uppercase tracking-wide">Sân chơi sáng tạo</span>
-                <h2 class="text-xl font-bold font-handwritten mt-3 mb-2 text-charcoal">
-                    <i class="fa-solid fa-palette text-slateBlue mr-2"></i> Bảng vẽ tay nghệ thuật & Tương tác âm thanh
-                </h2>
-                <p class="text-xs text-gray-500 mb-4">Bạn có thể tự do phác thảo các ý tưởng của mình trực tiếp lên khung bảng dưới đây, đồng thời bật nhạc chuông thư giãn chuông gió ở mục khóa màn hình bên trái để tăng tính tập trung.</p>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <!-- Advanced Drawing Board (Resolved client bounds bug permanently) -->
-                    <div class="md:col-span-3 bg-white border-2 border-charcoal rounded-2xl shadow-inner overflow-hidden relative min-h-[320px]" id="canvas-container">
-                        <div class="absolute inset-0 bg-white pointer-events-none opacity-20" style="background-image: linear-gradient(#e2e8f0 1px, transparent 1px); background-size: 100% 24px;"></div>
-                        <!-- Drawing board surface -->
-                        <canvas id="doodleCanvas" class="w-full h-full relative z-10 block bg-transparent" style="touch-action: none;"></canvas>
-                    </div>
-
-                    <!-- Side Controllers -->
-                    <div class="md:col-span-1 flex flex-col justify-between gap-4">
-                        <div class="space-y-4">
-                            <h4 class="font-bold font-handwritten text-xs text-charcoal">Bảng điều khiển nét:</h4>
-                            <!-- Brush colors selection -->
-                            <div>
-                                <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Màu vẽ:</label>
-                                <div class="flex gap-2">
-                                    <button onclick="setBrushColor('#2C3E50')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-charcoal" title="Đen Charcoal"></button>
-                                    <button onclick="setBrushColor('#517594')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-slateBlue" title="Xanh Slate"></button>
-                                    <button onclick="setBrushColor('#e11d48')" class="w-8 h-8 rounded-full border-2 border-charcoal bg-rose-600" title="Đỏ Rose"></button>
-                                    <button onclick="setEraser()" class="w-8 h-8 rounded-full border-2 border-charcoal bg-white flex items-center justify-center text-charcoal hover:bg-gray-100" title="Cọ Tẩy"><i class="fa-solid fa-eraser text-xs"></i></button>
-                                </div>
-                            </div>
-                            <!-- Brush thickness -->
-                            <div>
-                                <label class="text-[10px] uppercase font-bold text-gray-400 block mb-1">Độ dày nét vẽ</label>
-                                <input type="range" min="1" max="15" value="3" id="brushSize" class="w-full accent-slateBlue">
-                            </div>
-                        </div>
-
-                        <!-- Utility actions -->
-                        <div class="space-y-2">
-                            <button onclick="undoDraw()" class="w-full bg-white hover:bg-gray-50 border-2 border-charcoal text-xs font-bold py-1.5 px-3 rounded shadow-[2px_2px_0px_#2C3E50] transition-all flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-rotate-left"></i> Hoàn tác (Undo)
-                            </button>
-                            <button onclick="exportCanvas()" class="w-full bg-white hover:bg-gray-50 border-2 border-charcoal text-xs font-bold py-1.5 px-3 rounded shadow-[2px_2px_0px_#2C3E50] transition-all flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-download"></i> Tải hình đã vẽ (.png)
-                            </button>
-                            <button onclick="clearCanvas()" class="w-full bg-charcoal text-white text-xs font-bold py-1.5 px-3 rounded hover:bg-slateBlue transition-colors sketch-border-sm flex items-center justify-center gap-1">
-                                <i class="fa-solid fa-trash-can"></i> Dọn sạch bảng
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -1023,7 +1111,7 @@
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
             gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, office.currentTime + 2.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
             
             osc.start();
             osc.stop(audioCtx.currentTime + 2.5);
@@ -1118,11 +1206,6 @@
             targetTab.classList.remove('hidden');
             targetTab.classList.add('block');
 
-            // Handle special logic when switching to the playground tab to prevent 0x0 canvas resolution bug on load
-            if (tabName === 'playground') {
-                setTimeout(resizeCanvas, 50);
-            }
-
             // Nav indicators
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.className = 'nav-btn px-4 py-2 rounded-lg font-bold text-xs flex items-center gap-2 hover:bg-lightBlue text-charcoal border-2 border-transparent transition-all';
@@ -1173,7 +1256,7 @@
             { title: "Bước 9: Di chuyển tệp tin", desc: "Tạo tệp 'Dichuyen.txt' ở thư mục cha, sử dụng tổ hợp phím Cut & Paste để di chuyển tệp này vào bên trong thư mục con 'Tailieu'.", file: "📄 Tailieu/Dichuyen.txt (Đã dịch chuyển)" },
             { title: "Bước 10: Xóa tệp tin", desc: "Thực hiện nhấp chuột phải vào tệp 'Ghichuquantrong.txt' ở thư mục con và chọn 'Chuyển vào Thùng rác' (Move to Trash).", file: "🗑️ Thùng rác chứa: Ghichuquantrong.txt" },
             { title: "Bước 11: Xóa vĩnh viễn", desc: "Nhấn giữ phím Shift + Delete đối với tệp 'Dichuyen.txt' để giải phóng vĩnh viễn khỏi hệ thống mà không qua Thùng rác.", file: "Trạng thái: Đã xóa vĩnh viễn" },
-            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác, nhấp chuột phải vào 'Ghichuquantrong.txt' và chọn 'Đưa trở lại' (Restore) để phục hồi tệp về chỗ cũ.", file: "📄 Tailieu/Ghichuquantrong.txt (Khôi phục)" }
+            { title: "Bước 12: Khôi phục từ Thùng rác", desc: "Mở Thùng rác, nhấp chuột phải vào 'Ghichuquantrong.txt' và chọn 'Đưa trở lại' (Restore) để phục hồi tệp về chỗ cũ.", file: "📄 ThucHanh_NguyenHaiNgocChau/Tailieu/Ghichuquantrong.txt (Khôi phục)" }
         ];
 
         let currentStepIndex = 0;
@@ -1265,6 +1348,82 @@
             alert(`[Bước ${stepNum}] ${workflowDesc[stepNum - 1]}`);
         }
 
+        // APP DETAILS SELECTOR DATA INJECTION (Bài tập 4 - PDF 5 page 3)
+        const appsData = {
+            hello: {
+                title: "Hello Chinese",
+                pros: "Thiết kế giáo trình chuyên biệt hóa cho tiếng Trung, hỗ trợ tập viết nét chữ Hán và nhận diện phát âm chuẩn xác.",
+                cons: "Nội dung bài học trình độ nâng cao còn khá hạn chế.",
+                target: "Sinh viên trình độ mới bắt đầu nhập môn Hán ngữ."
+            },
+            duo: {
+                title: "Duolingo",
+                pros: "Tính năng trò chơi hóa (gamification) xuất sắc, tạo động lực duy trì thói quen học tập hàng ngày.",
+                cons: "Ngữ pháp tiếng Trung chưa phải thế mạnh cốt lõi, giải thích ngữ cảnh còn nông.",
+                target: "Sinh viên muốn duy trì phản xạ ngôn ngữ đều đặn hàng ngày."
+            },
+            super: {
+                title: "Super Chinese",
+                pros: "Sử dụng AI tiên tiến hỗ trợ phát âm, thiết kế tình huống giao tiếp đời thực sinh động.",
+                cons: "Nhiều tính năng cốt lõi bắt buộc phải trả phí dịch vụ.",
+                target: "Sinh viên muốn tập trung cải thiện phản xạ và luyện nói khẩu ngữ."
+            },
+            anki: {
+                title: "Anki",
+                pros: "Hệ thống Flashcard dựa trên thuật toán lặp lại ngắt quãng (Spaced Repetition) cực kỳ hiệu quả để ghi nhớ chữ Hán.",
+                cons: "Giao diện thô sơ, tốn nhiều thời gian ban đầu để làm quen thiết lập.",
+                target: "Người học tiếng Trung nghiêm túc muốn tích lũy kho từ vựng chuyên sâu."
+            },
+            pleco: {
+                title: "Pleco Dictionary",
+                pros: "Ứng dụng từ điển tiếng Trung toàn diện nhất, nhận diện chữ viết qua camera và vẽ tay cực nhạy.",
+                cons: "Không phải nền tảng giáo dục có lộ trình bài giảng hoàn chỉnh.",
+                target: "Mọi cấp độ học viên dùng để tra cứu ngữ nghĩa tức thời."
+            },
+            lingq: {
+                title: "LingQ",
+                pros: "Học ngoại ngữ thông qua việc đọc nghe tài liệu thực tế, giúp tích lũy vốn từ vựng khổng lồ.",
+                cons: "Độ dốc kiến thức khá cao đối với người mới bắt đầu hoàn toàn.",
+                target: "Học viên trình độ sơ trung cấp trở lên muốn nâng cao phản xạ đọc hiểu văn bản."
+            }
+        };
+
+        function showAppDetails(appKey) {
+            playScale(2);
+            // Reset active button state
+            document.querySelectorAll('#app-selectors button').forEach(btn => {
+                btn.className = "app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 hover:bg-gray-50 transition-all";
+            });
+            
+            // Set current active button
+            event.target.className = "app-sel-btn p-1.5 text-[10px] font-bold rounded border border-charcoal/20 bg-slateBlue text-white transition-all";
+
+            const data = appsData[appKey];
+            const pane = document.getElementById('app-details-pane');
+            pane.innerHTML = `
+                <p class="font-bold text-slateBlue">${data.title}</p>
+                <p class="text-gray-600 mt-1"><strong>Ưu điểm:</strong> ${data.pros}</p>
+                <p class="text-gray-600"><strong>Hạn chế:</strong> ${data.cons}</p>
+                <p class="text-gray-600"><strong>Phù hợp:</strong> ${data.target}</p>
+            `;
+        }
+
+        // DESIGN PHASE SELECTOR LOGIC (Bài tập 5 - PDF 5)
+        function selectDesignPhase(phaseIndex) {
+            playScale(5);
+            document.querySelectorAll('.phase-pane').forEach(pane => {
+                pane.classList.add('hidden');
+                pane.classList.remove('block');
+            });
+            document.getElementById(`phase-content-${phaseIndex}`).classList.remove('hidden');
+            document.getElementById(`phase-content-${phaseIndex}`).classList.add('block');
+
+            document.querySelectorAll('.phase-btn').forEach(btn => {
+                btn.className = "phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded hover:bg-gray-50 text-charcoal border border-charcoal/20 transition-colors";
+            });
+            document.getElementById(`btn-phase-${phaseIndex}`).className = "phase-btn w-full text-left text-[11px] font-semibold py-1.5 px-3 rounded bg-slateBlue text-white border border-charcoal/20 transition-colors";
+        }
+
         // INFOGRAPHIC BEFORE & AFTER VIEWER (Bài tập 5)
         const infographicVersions = {
             first: `
@@ -1293,127 +1452,6 @@
             playScale(1);
             const container = document.getElementById('infographic-preview-area');
             container.innerHTML = infographicVersions[versionKey];
-        }
-
-        // CANVAS ADVANCED DOODLE PAINT DRAWING APPARATUS (Pointer Events for robust drawing)
-        const canvas = document.getElementById('doodleCanvas');
-        const ctx = canvas.getContext('2d');
-        const canvasContainer = document.getElementById('canvas-container');
-        let painting = false;
-        let brushColor = '#2C3E50';
-        let drawingHistory = [];
-        let lastX = 0;
-        let lastY = 0;
-
-        function saveCanvasState() {
-            drawingHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
-            if (drawingHistory.length > 20) {
-                drawingHistory.shift();
-            }
-        }
-
-        function undoDraw() {
-            playScale(3);
-            if (drawingHistory.length > 0) {
-                const prevState = drawingHistory.pop();
-                ctx.putImageData(prevState, 0, 0);
-            } else {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        function resizeCanvas() {
-            // Buffer previous elements
-            let tempImgData = canvas.toDataURL();
-            
-            // Resolve invisible box resolution issues
-            const width = canvasContainer.clientWidth || 800;
-            const height = canvasContainer.clientHeight || 400;
-
-            canvas.width = width;
-            canvas.height = height;
-            
-            // Restore details
-            let img = new Image();
-            img.src = tempImgData;
-            img.onload = function() {
-                ctx.drawImage(img, 0, 0);
-            }
-        }
-
-        // Utility to fetch scale coordinates correctly
-        function getPointerPos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            const y = (e.clientY - rect.top) * (canvas.height / rect.height);
-            return { x, y };
-        }
-
-        function startPosition(e) {
-            initAudio();
-            saveCanvasState();
-            painting = true;
-
-            const pos = getPointerPos(e);
-            lastX = pos.x;
-            lastY = pos.y;
-        }
-
-        function finishedPosition() {
-            painting = false;
-            ctx.beginPath();
-        }
-
-        // Bulletproof coordinate scale math connecting lastX/Y and currentX/Y to draw flawlessly
-        function draw(e) {
-            if (!painting) return;
-
-            const pos = getPointerPos(e);
-
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(pos.x, pos.y);
-
-            const size = document.getElementById('brushSize').value;
-            ctx.lineWidth = size;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.strokeStyle = brushColor;
-            ctx.stroke();
-
-            // Set current as previous
-            lastX = pos.x;
-            lastY = pos.y;
-        }
-
-        // PointerEvents resolve both touch and mouse drawing flawlessly
-        canvas.addEventListener('pointerdown', startPosition);
-        canvas.addEventListener('pointerup', finishedPosition);
-        canvas.addEventListener('pointermove', draw);
-        canvas.addEventListener('pointerout', finishedPosition);
-
-        function setBrushColor(color) {
-            playScale(1);
-            brushColor = color;
-        }
-
-        function setEraser() {
-            playScale(3);
-            brushColor = '#ffffff';
-        }
-
-        function clearCanvas() {
-            playScale(2);
-            saveCanvasState();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function exportCanvas() {
-            playScale(5);
-            const link = document.createElement('a');
-            link.download = 'digital_doodle_art.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
         }
     </script>
 </body>
